@@ -200,3 +200,20 @@
 .pagination button.active{ background:var(--navy); color:#fff; border-color:var(--navy); }
 .pagination button:disabled{ opacity:.35; cursor:not-allowed; }
 .pagination button:not(:disabled):not(.active):hover{ border-color:var(--blue); color:var(--blue-deep); }
+
+/* ── contact / subscribe pages ───────────────────────── */
+.simple-page{ max-width:640px; margin:0 auto; padding:2.4rem clamp(1.2rem,4vw,3rem) 4rem; }
+.simple-page h1{ font-size:clamp(1.8rem,4vw,2.6rem); color:var(--navy); margin:0 0 .6rem; }
+.simple-page > p.lead{ font-family:var(--serif); color:var(--page-text-soft); margin-bottom:2rem; }
+.form-field{ display:flex; flex-direction:column; gap:.35rem; margin-bottom:1.2rem; }
+.form-field label{ font-family:var(--mono); font-size:.72rem; color:var(--navy); text-transform:uppercase; letter-spacing:.04em; }
+.form-field input, .form-field textarea{ font-family:var(--serif); font-size:.95rem; padding:.7rem .8rem; border:1px solid rgba(11,39,64,.2); border-radius:3px; background:#fff; color:var(--navy); }
+.form-field textarea{ min-height:120px; resize:vertical; }
+.form-field input:focus, .form-field textarea:focus{ outline:2px solid var(--blue); outline-offset:1px; }
+.form-submit{ margin-top:.4rem; }
+.form-note{ font-family:var(--mono); font-size:.72rem; color:var(--page-text-soft); margin-top:1.6rem; padding-top:1.2rem; border-top:1px dashed rgba(11,39,64,.15); }
+.contact-info{ display:flex; flex-direction:column; gap:.5rem; margin-bottom:2.2rem; font-family:var(--serif); color:var(--page-text); }
+.subscribe-row{ display:flex; gap:.6rem; flex-wrap:wrap; }
+.subscribe-row input[type="email"]{ flex:1 1 240px; }
+.subscribe-perks{ list-style:none; padding:0; margin:1.6rem 0 0; display:flex; flex-direction:column; gap:.6rem; font-family:var(--serif); color:var(--page-text); }
+.subscribe-perks li:before{ content:"〜 "; color:var(--blue); }
