@@ -13,6 +13,10 @@ tidelog-site/
 │   └── (其餘 9 個).html     示範用佔位文章，內容都寫「之後要補的內容」
 ├── css/
 │   └── styles.css          全站共用樣式（原本寫在 <style> 裡，現在抽出來一個檔案）
+├── scripts/
+│   └── gen_site.py         網站產生器：文章資料都寫在這裡（Python list），
+│                           跑一次 `python3 scripts/gen_site.py` 就會重新產生
+│                           index.html／articles.html／articles/*.html 全部頁面
 ├── videos/
 │   └── hero-surf.mp4       首頁背景影片
 ├── images/                 文章配圖放這裡（目前是空的，補圖片直接丟進來即可）
@@ -26,10 +30,23 @@ JS 只是控制「目前顯示第幾頁的卡片、隱藏其他頁」，配合�
 到時候如果文章量變大，可以考慮換成真正的「多頁實體檔案」或接資料庫。
 
 ### 新增一篇文章的流程
-1. 打開 `gen_site.py`（如果你想用產生器）或直接手動複製 `articles/wushi-gang.html` 當模板
-2. 複製一份到 `articles/你的文章id.html`，改標題／內文／圖片路徑（注意文章頁要用 `../images/...`，多一層 `../`）
-3. 到 `articles.html` 的卡片列表裡新增一張卡片（複製現有一張，改連結、標題、摘要）
-4. 存檔，`git add . && git commit -m "新增文章：xxx" && git push`
+**方法一（推薦）：改 `scripts/gen_site.py`**
+1. 打開 `scripts/gen_site.py`，找到 `articles = [...]` 這個 list
+2. 複製一筆 `dict(...)`，改成新文章的 id／標題／摘要／分類等資料
+3. 如果是有實際內容的文章（不是示範用），另外在 `article_detail()` 函式裡
+   仿照 `wushi_content` 的做法寫一段內文變數，並在判斷式裡加進去
+4. 執行 `python3 scripts/gen_site.py`，`index.html`／`articles.html`／
+   `articles/你的id.html` 會自動一起重新產生（含標籤篩選、分頁都會自動更新）
+5. `git add . && git commit -m "新增文章：xxx" && git push`
+
+**方法二（手動）：直接複製貼上**
+1. 複製 `articles/wushi-gang.html` 當模板，改標題／內文／圖片路徑
+   （注意文章頁要用 `../images/...`，多一層 `../`）
+2. 到 `articles.html` 手動加一張卡片（複製現有一張，改連結、標題、摘要、`data-tag`）
+3. 存檔，`git add . && git commit -m "新增文章：xxx" && git push`
+
+方法一比較快、不會漏改地方（例如忘記加標籤篩選用的 data-tag），
+但需要你願意碰一點點 Python；方法二比較直覺，純改 HTML，缺點是要記得同步改多個檔案。
 
 所有頁面的圖片、影片、CSS 都用**相對路徑**，只要檔名對得上、資料夾結構不變，
 不管在本機打開還是部署到網路上都能正常顯示。
