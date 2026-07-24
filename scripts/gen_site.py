@@ -40,6 +40,8 @@ def nav(prefix, active):
     <li><a{cls("home")} href="{prefix}index.html">首頁</a></li>
     <li><a{cls("articles")} href="{prefix}articles.html">衝浪文章</a></li>
     <li><a href="{prefix}index.html#spots">浪點資料庫</a></li>
+    <li><a{cls("contact")} href="{prefix}contact.html">聯絡我們</a></li>
+    <li><a{cls("subscribe")} href="{prefix}subscribe.html">訂閱最新浪況</a></li>
   </ul>
 </nav>
 '''
@@ -486,7 +488,7 @@ print(f"{len(articles)} article pages written")
 
 # ─────────────────────────────────────────────────────────
 # contact.html
-contact_body = f'''{nav("./", "")}
+contact_body = f'''{nav("./", "contact")}
 <div class="simple-page">
   <h1>聯絡我們</h1>
   <p class="lead">浪點資訊有誤、想投稿文章，或單純想聊衝浪，都歡迎寫信給我們。</p>
@@ -523,7 +525,7 @@ with open(f"{ROOT}/contact.html", "w") as f:
 
 # ─────────────────────────────────────────────────────────
 # subscribe.html
-subscribe_body = f'''{nav("./", "")}
+subscribe_body = f'''{nav("./", "subscribe")}
 <div class="simple-page">
   <h1>訂閱最新浪況</h1>
   <p class="lead">加入「浪誌 TIDELOG」的 LINE 浪況機器人好友，每天 05:00 收到專屬浪況早報，隨時打浪點名稱查即時浪高、風向、潮汐。</p>
