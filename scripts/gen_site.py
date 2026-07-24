@@ -57,6 +57,9 @@ def footer(prefix):
     </div>
     <div class="footer-social">
       <span class="label">Follow us</span>
+      <a href="https://line.me/R/ti/p/%40457fdtbo" target="_blank" rel="noopener" aria-label="加入LINE浪況機器人好友">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="1" y="2" width="22" height="20" rx="6" fill="#06C755"/><path d="M12 6.2c-4.1 0-7.4 2.7-7.4 6 0 3 2.6 5.5 6.1 5.9-.24.9-.9 2-.9 2.3 0 .2.1.3.3.3.15 0 .3-.1.4-.2.5-.4 2-1.6 2.8-2.3 4.3-.3 6-2.9 6-5.9 0-3.4-3.3-6.1-7.3-6.1z" fill="#fff"/></svg>
+      </a>
       <a href="#" aria-label="YouTube">
         <svg viewBox="0 0 24 24" fill="none"><rect x="1" y="5" width="22" height="14" rx="4" fill="#ff0000"/><path d="M10 9l6 3-6 3V9z" fill="#fff"/></svg>
       </a>
@@ -85,6 +88,12 @@ articles = [
     dict(id="wushi-gang", tag="浪點介紹", region="北部・烏石港", title="烏石港完整攻略：從防波堤內側練起",
          desc="沙灘與礁岩混合地形，適合初學者練習，但防波堤北側礁岩區要特別留意退流時機。",
          img="./images/wushi_surfbackground.png", wave_cls="waves-a", read="6 分", stub=False),
+    dict(id="beginner-spots", tag="衝浪知識", region="新手起步", title="新手衝浪去哪邊好？北中南推薦浪點",
+         desc="沙灘地形、浪高別超過 1.2m、離岸流少——三個挑浪點原則，附北中南各一個新手友善浪點。",
+         img=None, wave_cls="waves-b", read="5 分", stub=False),
+    dict(id="current-conditions", tag="衝浪知識", region="安全教室", title="海流與海況：下水前該看的注意事項",
+         desc="浪高只是海況的一部分，陸風／onshore、潮汐、離岸流一起看，才不會被表面的平靜騙了。",
+         img=None, wave_cls="waves-c", read="6 分", stub=False),
     dict(id="rip-current", tag="衝浪知識", region="安全教室", title="離岸流不是鬼故事：三個辨識訣竅",
          desc="混濁的水色、沒有白沫的水面、垂直於岸的小波紋——學會看這三個徵兆，比什麼都重要。",
          img=None, wave_cls="waves-b", read="4 分", stub=True),
@@ -113,6 +122,56 @@ articles = [
          desc="示範文章，內容待補：板具日常保養與簡易修補教學。",
          img=None, wave_cls="waves-a", read="－", stub=True),
 ]
+
+# ─────────────────────────────────────────────────────────
+# 浪點資料庫（同步自機器人 config.py 的 SURF_SPOTS_CONFIG，
+# 陸風方向／安全提醒文字是機器人原始資料；「難度」是機器人本身沒有存的
+# 靜態欄位（機器人是每天用即時浪高動態算 GoOcean 分級，不是固定值），
+# 這裡依安全提醒的地形描述人工給一個概略難度，方便新手瀏覽選點）
+spots = [
+    dict(name="金山沙珠灣", region="北部", wind="南／西南", level="中階",
+         pill="浪況適中", dot="#f4b13a", safety="注意水母與左側礁石區"),
+    dict(name="翡翠灣", region="北部", wind="南／東南", level="中階",
+         pill="私人海灣", dot="#f4b13a", safety="私人海灣，西側礁岩勿靠近"),
+    dict(name="中角灣", region="北部", wind="南／西南／西", level="中階",
+         pill="浪型多變", dot="#f4b13a", safety="礁岩地形，浪型多變，注意退流"),
+    dict(name="烏石港", region="北部", wind="西／西南／南", level="初～中階",
+         pill="適合初學", dot="#3fce8a", safety="防波堤北側礁岩區，注意退流"),
+    dict(name="宜蘭外澳", region="北部", wind="西／西南／南", level="進階",
+         pill="浪大刺激", dot="#ff5b5b", safety="注意防波堤旁離岸流"),
+    dict(name="松柏港福德里", region="中部", wind="東／東南／東北", level="中階",
+         pill="冬季浪佳", dot="#f4b13a", safety="冬季東北季風浪較佳，注意強流"),
+    dict(name="外埔漁港", region="中部", wind="東／東南", level="初～中階",
+         pill="適合練習", dot="#3fce8a", safety="沙灘型浪點，注意離岸流與砂泥底質"),
+    dict(name="花蓮北濱公園", region="東部", wind="西／西北／西南", level="中～進階",
+         pill="暗礁注意", dot="#ff5b5b", safety="礫石灘，退潮暗礁多，注意強離岸流"),
+    dict(name="花蓮環保公園", region="東部", wind="西／西北／西南", level="中～進階",
+         pill="浪崩快", dot="#ff5b5b", safety="礫石底質，浪崩快，注意下浪時機"),
+    dict(name="台東金樽", region="東部", wind="西／西北／西南", level="進階",
+         pill="經驗者優先", dot="#ff5b5b", safety="礁岩型，退潮大石裸露，建議有經驗者入水"),
+    dict(name="台東東河", region="東部", wind="西／西北／西南", level="中階",
+         pill="人潮注意", dot="#f4b13a", safety="沙礫混合底質，注意人潮與流向"),
+    dict(name="台南漁光島", region="南部", wind="東／東南／東北", level="初學",
+         pill="適合長板", dot="#3fce8a", safety="沙灘型浪點，浪小適合長板，注意岸邊砂洲與潮汐變化"),
+    dict(name="恆春南灣", region="南部・恆春", wind="北／東北／西北", level="初～中階",
+         pill="夏季熱門", dot="#f4b13a", safety="熱門觀光沙灘，人潮多，夏季水母頻繁，注意衝浪區域劃分"),
+    dict(name="恆春九鵬", region="南部・恆春", wind="西／西北／西南", level="進階",
+         pill="強流注意", dot="#ff5b5b", safety="半島東側礁岩地形，浪型多變，注意強流與離岸流"),
+    dict(name="恆春佳樂水", region="南部・恆春", wind="西／西北", level="中～進階",
+         pill="河口地形", dot="#f4b13a", safety="河口地形，退潮時注意暗礁"),
+]
+
+def spot_card(s):
+    return f'''    <div class="spot-card">
+      <div class="row1"><h3>{s['name']}</h3><span class="region">{s['region']}</span></div>
+      <div class="stats-row">
+        <div class="stat-block"><div class="label">陸風</div><div class="val">{s['wind']}</div></div>
+        <div class="stat-block"><div class="label">難度</div><div class="val">{s['level']}</div></div>
+      </div>
+      <div class="level-pill"><span class="dot" style="background:{s['dot']}"></span>{s['pill']}</div>
+      <p class="safety">{s['safety']}</p>
+    </div>'''
+
 
 def feat_card(a, linked=True, in_articles_page=False):
     href = f'articles/{a["id"]}.html' if not in_articles_page else f'{a["id"]}.html'
@@ -179,45 +238,10 @@ index_body = f'''{nav("./", "home")}
 <section class="grid-wrap section" id="spots">
   <div class="section-head">
     <h2>浪點資料庫</h2>
-    <a href="#">依地區篩選 →</a>
+    <span class="eyebrow">全台 {len(spots)} 個浪點</span>
   </div>
   <div class="spot-grid">
-    <div class="spot-card">
-      <div class="row1"><h3>烏石港</h3><span class="region">北部</span></div>
-      <div class="stats-row">
-        <div class="stat-block"><div class="label">陸風</div><div class="val">西南</div></div>
-        <div class="stat-block"><div class="label">難度</div><div class="val">初～中階</div></div>
-      </div>
-      <div class="level-pill"><span class="dot" style="background:#3fce8a"></span>適合初學</div>
-      <p class="safety">防波堤北側礁岩區，注意退流</p>
-    </div>
-    <div class="spot-card">
-      <div class="row1"><h3>宜蘭外澳</h3><span class="region">北部</span></div>
-      <div class="stats-row">
-        <div class="stat-block"><div class="label">陸風</div><div class="val">西南</div></div>
-        <div class="stat-block"><div class="label">難度</div><div class="val">進階</div></div>
-      </div>
-      <div class="level-pill"><span class="dot" style="background:#ff5b5b"></span>浪大刺激</div>
-      <p class="safety">注意防波堤旁離岸流</p>
-    </div>
-    <div class="spot-card">
-      <div class="row1"><h3>台南漁光島</h3><span class="region">南部</span></div>
-      <div class="stats-row">
-        <div class="stat-block"><div class="label">陸風</div><div class="val">東北</div></div>
-        <div class="stat-block"><div class="label">難度</div><div class="val">初學</div></div>
-      </div>
-      <div class="level-pill"><span class="dot" style="background:#3fce8a"></span>適合長板</div>
-      <p class="safety">注意岸邊砂洲與潮汐變化</p>
-    </div>
-    <div class="spot-card">
-      <div class="row1"><h3>恆春南灣</h3><span class="region">南部・恆春</span></div>
-      <div class="stats-row">
-        <div class="stat-block"><div class="label">陸風</div><div class="val">東北</div></div>
-        <div class="stat-block"><div class="label">難度</div><div class="val">初～中階</div></div>
-      </div>
-      <div class="level-pill"><span class="dot" style="background:#f4b13a"></span>夏季熱門</div>
-      <p class="safety">人潮多，夏季水母頻繁</p>
-    </div>
+{chr(10).join(spot_card(s) for s in spots)}
   </div>
 </section>
 
@@ -369,6 +393,52 @@ wushi_content = '''    <p>烏石港是北部最容易入門的浪點之一，主
     <h2>周邊資訊</h2>
     <p>烏石港衝浪教室聚集地，租板／換裝設施齊全，開車到國5頭城交流道下來 或搭火車到頭城站再轉乘計程車，都方便抵達。</p>'''
 
+beginner_content = '''    <p>新手選浪點，比起「哪裡浪比較大」，更該問「哪裡出錯的代價比較低」。三個簡單原則：地形以沙灘為主、避開整片礁岩區；浪高最好落在機器人 GoOcean 分級的 🟢 初學區間（浪高 1.2m 以下、週期 7 秒以下）；離岸流少，或至少流的位置固定、看得出來。</p>
+
+    <h2>北部：烏石港</h2>
+    <p>沙灘與礁岩混合地形，衝浪教室聚集地，租板、換裝設施齊全。防波堤內側是主要練習區，退潮前後兩小時浪型比較有型。<strong>但防波堤北側礁岩區退流不小</strong>，新手不建議靠過去。</p>
+
+    <h2>中部：外埔漁港</h2>
+    <p>沙灘型浪點，浪通常偏小，很適合單純練習划水的階段。底質偏砂泥，跌倒摔板的代價比礁岩區低很多，但一樣要留意離岸流位置。</p>
+
+    <h2>南部：台南漁光島</h2>
+    <p>沙灘型浪點，浪小適合長板，是南部新手很常去的起點。要注意的是岸邊砂洲會隨潮汐變化，退潮時水深、流向都可能跟漲潮時不一樣。</p>
+
+    <h2>下水前，先查一次即時浪況</h2>
+    <p>上面三個是「平常表現」比較穩定的新手浪點，但沒有哪個浪點是「永遠安全」——同一個浪點，颱風前後或東北季風增強時，照樣可能超出新手能應付的範圍。加 LINE 浪況機器人好友，出發前打浪點名稱查一次即時浪高、風向、潮汐，比看這篇文章更準。</p>'''
+
+current_conditions_content = '''    <p>很多人挑浪點只看「今天浪高幾公尺」，但同樣 0.8m 的浪，陸風配退潮跟onshore配滿潮，海況可以差很多。這篇整理下水前該一起看的幾件事。</p>
+
+    <h2>離岸流：三個辨識徵兆</h2>
+    <ul>
+      <li>水色明顯比周圍混濁，像一條顏色不同的水道</li>
+      <li>浪快要碎的區域，那條水道卻沒有白沫</li>
+      <li>水面出現一排跟岸邊垂直（不是平行）的小波紋</li>
+    </ul>
+    <p>看到這三個徵兆同時出現，那多半就是離岸流的位置——不一定要完全避開（有經驗者甚至會利用離岸流快速划出去），但新手至少要知道它在哪，不要傻傻站在裡面對抗它。</p>
+
+    <h2>陸風（offshore）跟 onshore 差在哪</h2>
+    <p>陸風從岸上吹向海面，會把浪面「壓」得比較乾淨、浪型漂亮；onshore 風從海面吹向岸邊，會把浪面吹得破碎雜亂，看起來浪高差不多，實際上難抓好浪型很多。這也是為什麼機器人的浪點資料裡，每個點都會標記「陸風方向」——出發前風向對不對，比浪高數字更該優先看。</p>
+
+    <h2>潮汐怎麼影響海況</h2>
+    <p>同一個浪點，滿潮跟退潮的海況可能完全不同：礁岩型浪點退潮容易礁石裸露、水深變淺，危險度上升；沙灘型浪點則常是退潮前後兩小時浪型最乾淨。機器人查單一浪點時會附上今日潮汐時刻，出發前可以順便看一眼。</p>
+
+    <h2>GoOcean 分級對照</h2>
+    <p>機器人每則浪況推播都會附上分級燈號，判斷邏輯大致是：</p>
+    <ul>
+      <li>🟢 初學：浪高 0.8m 以下，或週期短的小浪</li>
+      <li>🟡 中階：浪高 0.8～1.8m 左右</li>
+      <li>🔴 進階：浪高 1.8m 以上，或浪不大但週期很長（長湧浪能量大）</li>
+      <li>⛔ 危險封閉：浪高 3m 以上，或大浪配長週期</li>
+    </ul>
+    <p>加 LINE 好友、打浪點名稱查詢，就能同時看到浪高、風向、潮汐跟這個分級燈號，比單看一項數字更能判斷海況。</p>'''
+
+CONTENT_MAP = {
+    "wushi-gang": wushi_content,
+    "beginner-spots": beginner_content,
+    "current-conditions": current_conditions_content,
+}
+
 def stub_content(a):
     return f'''    <p>這是示範用的佔位文章，用來測試「衝浪文章」列表頁的分頁功能是否正常運作。之後把這段換成 <strong>{a["title"]}</strong> 的實際內容即可，段落結構（h2 / p / ul / figure）都可以照抄 {"../images/" }下的圖片路徑寫法。</p>
 
@@ -381,10 +451,10 @@ def stub_content(a):
     </ul>'''
 
 def article_detail(a):
-    date = "2026.07.15" if a["id"]=="wushi-gang" else "草稿・尚未發布"
-    stat_line = '<span class="stat">浪高 0.8–1.6m</span><span class="stat">週期 6–9s</span><span>適合｜初學～中階</span>' if a["id"]=="wushi-gang" else '<span class="stat">示範資料</span>'
-    body_content = wushi_content if a["id"]=="wushi-gang" else stub_content(a)
-    ph_label = "封面照片預留位置（之後換成實拍照）" if a["id"] != "wushi-gang" else "封面照片預留位置（之後換成烏石港實拍照）"
+    date = "2026.07.15" if a["id"]=="wushi-gang" else ("2026.07.24" if not a["stub"] else "草稿・尚未發布")
+    stat_line = '<span class="stat">浪高 0.8–1.6m</span><span class="stat">週期 6–9s</span><span>適合｜初學～中階</span>' if a["id"]=="wushi-gang" else ('<span class="stat">衝浪知識</span>' if not a["stub"] else '<span class="stat">示範資料</span>')
+    body_content = CONTENT_MAP.get(a["id"]) or stub_content(a)
+    ph_label = "封面照片預留位置（之後換成烏石港實拍照）" if a["id"] == "wushi-gang" else "封面照片預留位置（之後可換成實拍照）"
 
     art_body = f'''{nav("../", "articles")}
 <div class="article-divider" style="margin-top:1.5rem;"><span>{a["tag"]}</span><div class="line"></div></div>
@@ -456,24 +526,22 @@ with open(f"{ROOT}/contact.html", "w") as f:
 subscribe_body = f'''{nav("./", "")}
 <div class="simple-page">
   <h1>訂閱最新浪況</h1>
-  <p class="lead">留下 Email，新文章、浪點更新、突發好浪通知，第一時間收到。</p>
+  <p class="lead">加入「浪誌 TIDELOG」的 LINE 浪況機器人好友，每天 05:00 收到專屬浪況早報，隨時打浪點名稱查即時浪高、風向、潮汐。</p>
 
-  <form class="subscribe-form" onsubmit="return false;">
-    <div class="subscribe-row">
-      <input type="email" placeholder="你的 email" required>
-      <button class="btn primary" type="submit">訂閱</button>
+  <div class="line-cta">
+    <img class="line-qr" src="https://qr-official.line.me/sid/L/@457fdtbo.png" alt="加入LINE浪況機器人好友 QRCode" width="180" height="180" loading="lazy">
+    <div class="line-cta-body">
+      <a class="btn primary" href="https://line.me/R/ti/p/%40457fdtbo" target="_blank" rel="noopener">加入 LINE 好友</a>
+      <p class="line-id">LINE ID：@457fdtbo</p>
+      <p>手機掃描左側 QRCode，或點選按鈕直接加入。</p>
     </div>
-  </form>
+  </div>
 
   <ul class="subscribe-perks">
-    <li>每週浪況精選整理，不用自己每天查</li>
-    <li>新浪點文章上架第一時間通知</li>
-    <li>偶爾才有的裝備開箱／優惠資訊</li>
+    <li>每天 05:00 專屬浪況早報，依你的浪齡個人化推薦浪點</li>
+    <li>長浪／颱風警戒即時推播，不用自己盯氣象</li>
+    <li>打浪點名稱（如「烏石港」）隨時查即時浪高、風向、潮汐時刻</li>
   </ul>
-
-  <p class="form-note">這裡目前只是畫面樣式，按「訂閱」還不會真的收集 email。
-  正式上線前需要接一個電子報服務（例如 Mailchimp、Buttondown、電子豹），
-  或至少先串一個 Google 表單頂著用，我可以幫你接好。</p>
 </div>
 
 {footer("./")}'''

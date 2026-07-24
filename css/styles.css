@@ -218,3 +218,11 @@
 .subscribe-row input[type="email"]{ flex:1 1 240px; }
 .subscribe-perks{ list-style:none; padding:0; margin:1.6rem 0 0; display:flex; flex-direction:column; gap:.6rem; font-family:var(--serif); color:var(--page-text); }
 .subscribe-perks li:before{ content:"〜 "; color:var(--blue); }
+
+/* ── LINE 加入好友卡片 ───────────────────────────────── */
+.line-cta{ display:flex; align-items:center; gap:1.4rem; background:var(--panel-2); border:1px solid var(--rule); border-radius:6px; padding:1.4rem; flex-wrap:wrap; }
+.line-qr{ width:120px; height:120px; border-radius:4px; background:#fff; padding:.4rem; border:1px solid var(--rule); flex-shrink:0; }
+.line-cta-body{ display:flex; flex-direction:column; gap:.5rem; }
+.line-cta-body p{ margin:0; font-family:var(--serif); font-size:.88rem; color:var(--page-text-soft); }
+.line-cta-body .line-id{ font-family:var(--mono); font-size:.78rem; color:var(--navy); letter-spacing:.03em; }
+.line-cta-body .btn{ width:fit-content; }
