@@ -191,11 +191,16 @@
 .article-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.4rem; padding:1.6rem clamp(1.2rem,4vw,3rem) 0; }
 .article-grid .feat-card.is-stub{ opacity:.55; }
 .article-grid .feat-card.is-hidden{ display:none; }
+.tag-filter{ display:flex; gap:.6rem; flex-wrap:wrap; padding:1.4rem clamp(1.2rem,4vw,3rem) 0; }
+.tag-filter button{ font-family:var(--mono); font-size:.78rem; padding:.4rem .9rem; border-radius:20px; border:1px solid var(--rule); background:#fff; color:var(--page-text-soft); cursor:pointer; }
+.tag-filter button:hover{ border-color:var(--blue); color:var(--blue-deep); }
+.tag-filter button.active{ background:var(--navy); border-color:var(--navy); color:#fff; }
 .pagination{ display:flex; justify-content:center; align-items:center; gap:.5rem; padding:2.4rem clamp(1.2rem,4vw,3rem) 3.2rem; font-family:var(--mono); }
 .pagination button{ min-width:2.2rem; height:2.2rem; border:1px solid rgba(11,39,64,.2); background:#fff; color:var(--navy); border-radius:3px; cursor:pointer; font-family:var(--mono); font-size:.85rem; }
 .pagination button.active{ background:var(--navy); color:#fff; border-color:var(--navy); }
 .pagination button:disabled{ opacity:.35; cursor:not-allowed; }
 .pagination button:not(:disabled):not(.active):hover{ border-color:var(--blue); color:var(--blue-deep); }
+.pagination .pg-ellipsis{ color:var(--page-text-soft); padding:0 .3rem; }
 
 /* ── contact / subscribe pages ───────────────────────── */
 .simple-page{ max-width:640px; margin:0 auto; padding:2.4rem clamp(1.2rem,4vw,3rem) 4rem; }
