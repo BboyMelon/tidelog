@@ -217,7 +217,7 @@
 .contact-info{ display:flex; flex-direction:column; gap:.5rem; margin-bottom:2.2rem; font-family:var(--serif); color:var(--page-text); }
 .subscribe-row{ display:flex; gap:.6rem; flex-wrap:wrap; }
 .subscribe-row input[type="email"]{ flex:1 1 240px; }
-.subscribe-perks{ list-style:none; padding:0; margin:1.6rem 0 0; display:flex; flex-direction:column; gap:.6rem; font-family:var(--serif); color:var(--page-text); }
+.subscribe-perks{ list-style:none; padding:0; margin:1.6rem 0 1.6rem; display:flex; flex-direction:column; gap:.6rem; font-family:var(--serif); color:var(--page-text); }
 .subscribe-perks li:before{ content:"〜 "; color:var(--blue); }
 
 /* ── 開通推播表單（tidelog-site → /subscribe 後端）───────── */

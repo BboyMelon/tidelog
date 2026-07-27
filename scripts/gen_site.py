@@ -549,7 +549,11 @@ subscribe_body = f'''{nav("./", "subscribe")}
   </ul>
 
   <h2 class="form-heading">開通每日推播</h2>
-  <p class="lead">加好友後，還要完成這一步，才會真的收到每天 05:00 的浪況早報。</p>
+  <p class="lead">加好友後，還要多一個步驟才會真的收到每天 05:00 的浪況早報，兩種方式擇一即可：</p>
+  <ul class="subscribe-perks">
+    <li><strong>推薦：</strong>在 LINE 對話裡點選單「Surfer 檔案建立」，填寫性別／浪齡／板型／常衝浪點，除了開通推播，每天還會依你的程度收到個人化浪點推薦</li>
+    <li>或者：直接填寫下方表單，較快速，但不含個人化推薦</li>
+  </ul>
 
   <form id="subscribe-form" class="contact-form">
     <div class="form-field">
