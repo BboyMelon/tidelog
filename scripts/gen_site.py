@@ -6,9 +6,6 @@ import os
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SCRIPT_DIR)
 
-# 浪況機器人後端（Render），/subscribe 表單送出目標
-RENDER_API_URL = "https://surf-robot.onrender.com"
-
 def head(prefix, title, desc=""):
     return f'''<!DOCTYPE html>
 <html lang="zh-Hant">
@@ -549,61 +546,13 @@ subscribe_body = f'''{nav("./", "subscribe")}
   </ul>
 
   <h2 class="form-heading">開通每日推播</h2>
-  <p class="lead">加好友後，還要多一個步驟才會真的收到每天 05:00 的浪況早報，兩種方式擇一即可：</p>
-  <ul class="subscribe-perks">
-    <li><strong>推薦：</strong>在 LINE 對話裡點選單「Surfer 檔案建立」，填寫性別／浪齡／板型／常衝浪點，除了開通推播，每天還會依你的程度收到個人化浪點推薦</li>
-    <li>或者：直接填寫下方表單，較快速，但不含個人化推薦</li>
-  </ul>
+  <p class="lead">加好友後，還要多一個步驟才會真的收到每天 05:00 的浪況早報：在 LINE 對話裡傳「<strong>Surfer 檔案建立</strong>」（或點選單同名按鈕），依格式填寫性別／浪齡／板型／常衝浪點並回傳，送出後就會自動開通，而且每天還會依你的程度收到個人化浪點推薦。</p>
 
-  <form id="subscribe-form" class="contact-form">
-    <div class="form-field">
-      <label for="s-email">Email（選填）</label>
-      <input id="s-email" name="email" type="email" placeholder="your@email.com">
-    </div>
-    <div class="form-field">
-      <label for="s-line-id">LINE User ID <span class="req">＊必填</span></label>
-      <input id="s-line-id" name="line_id" type="text" placeholder="Uxxxxxxxxxxx" required>
-    </div>
-    <p class="form-hint">💡 還不知道自己的 LINE ID？傳「我的ID」給浪況機器人，它會回覆給你。</p>
-    <button class="btn primary form-submit" type="submit">🏄 開通推播</button>
-    <p id="subscribe-result" class="form-result" role="status" aria-live="polite"></p>
-  </form>
+  <div class="howto-shot">
+    <img src="./images/subscribe-howto.jpg" alt="LINE對話操作示範：傳「Surfer 檔案建立」或點選單按鈕" loading="lazy">
+    <p class="howto-caption">📱 在 LINE 對話裡傳「Surfer 檔案建立」，或點下方選單同名按鈕</p>
+  </div>
 </div>
-
-<script>
-(function () {{
-  const API_URL = "{RENDER_API_URL}/subscribe";
-  const form   = document.getElementById("subscribe-form");
-  const result = document.getElementById("subscribe-result");
-  const submit = form.querySelector(".form-submit");
-
-  form.addEventListener("submit", async function (e) {{
-    e.preventDefault();
-    result.className = "form-result";
-    result.textContent = "傳送中，若機器人剛好在休眠可能要等 30-60 秒⋯⋯";
-
-    const email  = document.getElementById("s-email").value.trim();
-    const lineId = document.getElementById("s-line-id").value.trim();
-
-    submit.disabled = true;
-    try {{
-      const resp = await fetch(API_URL, {{
-        method: "POST",
-        headers: {{ "Content-Type": "application/json" }},
-        body: JSON.stringify({{ email: email, line_id: lineId }}),
-      }});
-      const data = await resp.json();
-      result.textContent = data.message || (resp.ok ? "訂閱成功！" : "發生錯誤，請稍後再試");
-      result.className = "form-result " + (resp.ok ? "ok" : "err");
-    }} catch (err) {{
-      result.textContent = "連線失敗，請確認網路後再試一次";
-      result.className = "form-result err";
-    }} finally {{
-      submit.disabled = false;
-    }}
-  }});
-}})();
-</script>
 
 {footer("./")}'''
 
