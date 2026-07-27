@@ -93,36 +93,9 @@ articles = [
     dict(id="beginner-spots", tag="衝浪知識", region="新手起步", title="新手衝浪去哪邊好？北中南推薦浪點",
          desc="沙灘地形、浪高別超過 1.2m、離岸流少——三個挑浪點原則，附北中南各一個新手友善浪點。",
          img=None, wave_cls="waves-b", read="5 分", stub=False),
-    dict(id="current-conditions", tag="衝浪知識", region="安全教室", title="海流與海況：下水前該看的注意事項",
-         desc="浪高只是海況的一部分，陸風／onshore、潮汐、離岸流一起看，才不會被表面的平靜騙了。",
+    dict(id="first-timer-safety", tag="衝浪知識", region="新手起步", title="不會游泳可以衝浪嗎？第一次下水前該知道的 3 件事",
+         desc="不會游泳不是問題，問題是海況複雜、離岸流，還有沒學會讀浪跟划水——這篇整理下水前的checklist。",
          img=None, wave_cls="waves-c", read="6 分", stub=False),
-    dict(id="rip-current", tag="衝浪知識", region="安全教室", title="離岸流不是鬼故事：三個辨識訣竅",
-         desc="混濁的水色、沒有白沫的水面、垂直於岸的小波紋——學會看這三個徵兆，比什麼都重要。",
-         img=None, wave_cls="waves-b", read="4 分", stub=True),
-    dict(id="jinzun", tag="浪點介紹", region="東部・台東金樽", title="金樽：退潮時大石裸露，這樣安排下水時間",
-         desc="礁岩型浪點，浪況佳但地形變化快，建議有經驗者優先，並抓緊滿潮前兩小時的空檔。",
-         img=None, wave_cls="waves-c", read="7 分", stub=True),
-    dict(id="wetsuit-guide", tag="裝備筆記", region="新手必看", title="台灣海溫怎麼選防寒衣？四季實測心得",
-         desc="冬天東北季風浪點水溫直落 18 度，厚度怎麼挑、袖長要不要留，實際下水比較給你看。",
-         img=None, wave_cls="waves-a", read="5 分", stub=True),
-    dict(id="waimu", tag="浪點介紹", region="北部・宜蘭外澳", title="外澳：風浪都大，進階者的練習場",
-         desc="示範文章，內容待補：外澳浪點特色、風向與離岸流位置整理。",
-         img=None, wave_cls="waves-b", read="－", stub=True),
-    dict(id="fin-setup", tag="裝備筆記", region="板具設定", title="尾鰭配置入門：單/三鰭差在哪？",
-         desc="示範文章，內容待補：不同尾鰭配置對操控性與速度的影響。",
-         img=None, wave_cls="waves-c", read="－", stub=True),
-    dict(id="tide-reading", tag="衝浪知識", region="浪況判斷", title="怎麼看潮汐表決定下水時間？",
-         desc="示範文章，內容待補：潮汐表基礎判讀與各浪點的黃金窗口對照。",
-         img=None, wave_cls="waves-a", read="－", stub=True),
-    dict(id="nanwan", tag="浪點介紹", region="南部・恆春南灣", title="南灣夏季衝浪：人潮與水母季注意事項",
-         desc="示範文章，內容待補：南灣夏季浪況、人潮尖峰時段與水母出沒提醒。",
-         img=None, wave_cls="waves-b", read="－", stub=True),
-    dict(id="paddle-basics", tag="衝浪知識", region="新手基本功", title="划水效率差？三個常見姿勢錯誤",
-         desc="示範文章，內容待補：划水常見錯誤姿勢與修正方式圖解。",
-         img=None, wave_cls="waves-c", read="－", stub=True),
-    dict(id="board-care", tag="裝備筆記", region="板具保養", title="衝浪板保養：曬痕、黃化、修補怎麼處理",
-         desc="示範文章，內容待補：板具日常保養與簡易修補教學。",
-         img=None, wave_cls="waves-a", read="－", stub=True),
 ]
 
 # ─────────────────────────────────────────────────────────
@@ -409,36 +382,30 @@ beginner_content = '''    <p>新手選浪點，比起「哪裡浪比較大」，
     <h2>下水前，先查一次即時浪況</h2>
     <p>上面三個是「平常表現」比較穩定的新手浪點，但沒有哪個浪點是「永遠安全」——同一個浪點，颱風前後或東北季風增強時，照樣可能超出新手能應付的範圍。加 LINE 浪況機器人好友，出發前打浪點名稱查一次即時浪高、風向、潮汐，比看這篇文章更準。</p>'''
 
-current_conditions_content = '''    <p>很多人挑浪點只看「今天浪高幾公尺」，但同樣 0.8m 的浪，陸風配退潮跟onshore配滿潮，海況可以差很多。這篇整理下水前該一起看的幾件事。</p>
+first_timer_safety_content = '''    <p>常有人問：不會游泳可以學衝浪嗎？答案是可以——新手課大多在踩得到底的淺灘上課，重點從來不是「會不會游泳」，而是腳繩有沒有綁好、教練有沒有在旁邊顧、今天的海況適不適合新手下水。真正該留意的，是接下來這三件事。</p>
 
-    <h2>離岸流：三個辨識徵兆</h2>
+    <h2>海況比你想的複雜</h2>
+    <p>能不能下水，不是看「今天有沒有出太陽」就能判斷。夏天離台灣很遠的颱風，照樣可能把大浪送過來；新手常常想「颱風那麼遠應該還好吧」，結果海況早就超出能應付的範圍。找教練或有經驗的浪友問清楚今天適不適合新手，比自己憑感覺猜準得多——出發前也可以先打浪點名稱問問機器人，浪高、週期跟分級燈號一次看到。</p>
+
+    <h2>離岸流才是真正的敵人</h2>
+    <p>離岸流是海浪拍上岸後，海水匯聚成一股往外海流回去的力量。沒有浮具又不知道怎麼脫離的話，很容易被帶到外海，一慌就更容易溺水。辨識訣竅：水色比周圍混濁、浪快碎的區域卻沒有白沫、水面出現一排垂直於岸邊的小波紋——這三個徵兆同時出現，那多半就是離岸流的位置。第一次到不熟的浪點，務必先問教練今天的地形怎麼看。</p>
+
+    <h2>沒學會讀浪跟划水，永遠站不起來</h2>
+    <p>體驗課能站起來，很多時候是教練幫忙挑浪、推板的功勞。之後自己租板練習才會發現「怎麼突然站不起來了」——這不是退步，是進入真正要學「讀浪」跟「划水」的階段，本來就會經歷這段卡關期，撐過去就是自己的功力。</p>
+
+    <h2>下水前 checklist</h2>
     <ul>
-      <li>水色明顯比周圍混濁，像一條顏色不同的水道</li>
-      <li>浪快要碎的區域，那條水道卻沒有白沫</li>
-      <li>水面出現一排跟岸邊垂直（不是平行）的小波紋</li>
+      <li>先上正式體驗課，不要只租板子附贈的教學，落差真的很大</li>
+      <li>問清楚今天適不適合新手，教練回答含糊就換一家</li>
+      <li>裝備到位：腳繩、合身防磨衣，帥不帥不重要，能不能平安回家比較重要</li>
+      <li>把離岸流的三個徵兆記起來，哪怕只記得「顏色不同、沒有白沫的水道要小心」也好</li>
     </ul>
-    <p>看到這三個徵兆同時出現，那多半就是離岸流的位置——不一定要完全避開（有經驗者甚至會利用離岸流快速划出去），但新手至少要知道它在哪，不要傻傻站在裡面對抗它。</p>
-
-    <h2>陸風（offshore）跟 onshore 差在哪</h2>
-    <p>陸風從岸上吹向海面，會把浪面「壓」得比較乾淨、浪型漂亮；onshore 風從海面吹向岸邊，會把浪面吹得破碎雜亂，看起來浪高差不多，實際上難抓好浪型很多。這也是為什麼機器人的浪點資料裡，每個點都會標記「陸風方向」——出發前風向對不對，比浪高數字更該優先看。</p>
-
-    <h2>潮汐怎麼影響海況</h2>
-    <p>同一個浪點，滿潮跟退潮的海況可能完全不同：礁岩型浪點退潮容易礁石裸露、水深變淺，危險度上升；沙灘型浪點則常是退潮前後兩小時浪型最乾淨。機器人查單一浪點時會附上今日潮汐時刻，出發前可以順便看一眼。</p>
-
-    <h2>GoOcean 分級對照</h2>
-    <p>機器人每則浪況推播都會附上分級燈號，判斷邏輯大致是：</p>
-    <ul>
-      <li>🟢 初學：浪高 0.8m 以下，或週期短的小浪</li>
-      <li>🟡 中階：浪高 0.8～1.8m 左右</li>
-      <li>🔴 進階：浪高 1.8m 以上，或浪不大但週期很長（長湧浪能量大）</li>
-      <li>⛔ 危險封閉：浪高 3m 以上，或大浪配長週期</li>
-    </ul>
-    <p>加 LINE 好友、打浪點名稱查詢，就能同時看到浪高、風向、潮汐跟這個分級燈號，比單看一項數字更能判斷海況。</p>'''
+    <p>不會游泳真的不等於不能學衝浪，但值得信任的教練跟合適的海況，才是能不能安心下水的關鍵。出發前加 LINE 好友、打浪點名稱查一次即時浪況，比憑印象猜安不安全準確。</p>'''
 
 CONTENT_MAP = {
     "wushi-gang": wushi_content,
     "beginner-spots": beginner_content,
-    "current-conditions": current_conditions_content,
+    "first-timer-safety": first_timer_safety_content,
 }
 
 def stub_content(a):
@@ -453,7 +420,7 @@ def stub_content(a):
     </ul>'''
 
 def article_detail(a):
-    date = "2026.07.15" if a["id"]=="wushi-gang" else ("2026.07.24" if not a["stub"] else "草稿・尚未發布")
+    date = {"wushi-gang": "2026.07.15", "beginner-spots": "2026.07.24", "first-timer-safety": "2026.07.27"}.get(a["id"], "草稿・尚未發布")
     stat_line = '<span class="stat">浪高 0.8–1.6m</span><span class="stat">週期 6–9s</span><span>適合｜初學～中階</span>' if a["id"]=="wushi-gang" else ('<span class="stat">衝浪知識</span>' if not a["stub"] else '<span class="stat">示範資料</span>')
     body_content = CONTENT_MAP.get(a["id"]) or stub_content(a)
     ph_label = "封面照片預留位置（之後換成烏石港實拍照）" if a["id"] == "wushi-gang" else "封面照片預留位置（之後可換成實拍照）"

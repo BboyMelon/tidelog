@@ -3,3 +3,4 @@ Thumbs.db
 *.b64
 *.log
 .vscode/
+__pycache__/
