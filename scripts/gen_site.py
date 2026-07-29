@@ -556,7 +556,7 @@ MAP_SPOTS = [
          safety="注意防波堤旁離岸流"),
     dict(name="福隆", category="北部", lat=25.017, lon=121.945,
          safety="雙溪出海口地形，注意河口離岸流"),
-    dict(name="松柏港福德里", category="中部", lat=24.35, lon=120.62,
+    dict(name="松柏港福德里", category="中部", lat=24.4015, lon=120.5809,
          safety="冬季東北季風浪較佳，注意強流"),
     dict(name="外埔漁港", category="中部", lat=24.6499, lon=120.7717,
          safety="沙灘型浪點，注意離岸流與砂泥底質"),
