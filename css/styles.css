@@ -44,19 +44,26 @@
   nav.site{
     position:sticky; top:0; z-index:20;
     display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; row-gap:.7rem;
     padding:1.1rem clamp(1.2rem,4vw,3rem);
     background:color-mix(in srgb, var(--page-bg) 86%, transparent);
     backdrop-filter:blur(10px);
     border-bottom:1px solid var(--rule);
   }
   .brand{ display:flex; align-items:center; gap:.6rem; font-family:var(--display); font-weight:700;
-    background:var(--navy); padding:.5rem .9rem .5rem .6rem; border-radius:8px; }
+    background:var(--navy); padding:.5rem .9rem .5rem .6rem; border-radius:8px; flex-shrink:0; }
   .brand .mark{ width:34px; height:26px; }
   .brand .zh{ font-size:1.15rem; letter-spacing:.02em; color:#ffffff; }
   .brand .en{ font-family:var(--mono); font-size:.68rem; color:var(--navy-text-soft); letter-spacing:.14em; }
-  .navlinks{ display:flex; gap:clamp(1rem,3vw,2.2rem); font-size:.92rem; list-style:none; padding:0; margin:0; }
-  .navlinks a{ text-decoration:none; padding-bottom:3px; border-bottom:2px solid transparent; color:var(--page-text); }
+  .navlinks{ display:flex; flex-wrap:wrap; gap:.5rem clamp(1rem,3vw,2.2rem); font-size:.92rem; list-style:none; padding:0; margin:0; }
+  .navlinks a{ text-decoration:none; padding-bottom:3px; border-bottom:2px solid transparent; color:var(--page-text); white-space:nowrap; }
   .navlinks a.on, .navlinks a:hover{ border-color:var(--blue); }
+
+  /* ── 小螢幕：nav 換行後縮小字級跟間距，維持可讀性 ──────── */
+  @media (max-width: 640px){
+    nav.site{ padding:.9rem clamp(1rem,4vw,2rem); }
+    .navlinks{ width:100%; gap:.5rem 1rem; font-size:.82rem; }
+  }
 
   /* ── hero (video background) ─────────────────────────── */
   .hero{ position:relative; min-height:min(78vh,720px); display:flex; align-items:flex-end; overflow:hidden; background:linear-gradient(180deg,#dceefb 0%,#f6fafd 55%,#f6fafd 100%); }
@@ -239,7 +246,7 @@
 .map-page > p.lead{ font-family:var(--serif); color:var(--page-text-soft); margin-bottom:1.6rem; }
 .spot-map{ width:100%; height:560px; border-radius:12px; border:1px solid var(--rule); background:var(--panel-2); }
 .map-banner{
-  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;
   background:var(--panel-2); border:1px solid var(--rule); border-radius:8px;
   padding:.7rem 1rem; margin-bottom:.9rem; font-family:var(--mono); font-size:.82rem; color:var(--page-text-soft);
 }
@@ -253,6 +260,13 @@
 .map-legend span{ display:inline-flex; align-items:center; gap:.4rem; }
 .map-legend i{ width:10px; height:10px; border-radius:50%; display:inline-block; }
 .map-note{ font-family:var(--mono); font-size:.72rem; color:var(--page-text-soft); margin-top:.8rem; }
+
+@media (max-width: 640px){
+  .map-page{ padding-top:1.6rem; }
+  .spot-map{ height:70vh; min-height:320px; }
+  .map-legend{ gap:.6rem 1rem; font-size:.76rem; }
+  .map-banner{ font-size:.76rem; }
+}
 
 /* Leaflet popup 內容（沿用品牌字體/顏色，外層盒子樣式由 leaflet.css 提供）*/
 .leaflet-popup-content{ margin:.8rem 1rem; }
