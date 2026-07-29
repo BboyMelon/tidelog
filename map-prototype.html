@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>浪誌 TIDELOG — 互動地圖原型（小範圍測試）</title>
+<style>
+  :root{
+    --navy:#0b2740; --paper:#f6fafd; --sky:#e8f3fb; --blue:#1477c9; --yellow:#ffc63a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif;
+    background:var(--paper); color:var(--navy);
+  }
+  header{
+    padding:20px 32px; background:var(--navy); color:#fff;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  header .brand{font-weight:700; font-size:1.1rem; letter-spacing:.02em;}
+  header .note{font-size:.8rem; color:#9fc4e6;}
+  main{
+    max-width:1100px; margin:0 auto; padding:32px 20px 64px;
+  }
+  h1{font-size:1.4rem; margin:0 0 6px;}
+  .sub{color:#3a5670; margin:0 0 28px; font-size:.95rem;}
+  .stage{
+    position:relative;
+    display:flex; justify-content:center;
+    background:linear-gradient(180deg,#eaf5fc 0%, var(--sky) 100%);
+    border-radius:20px; padding:24px 0; overflow:visible;
+  }
+  svg{ display:block; width:340px; height:auto; }
+  .island{ fill:#cfe6d4; stroke:#8fb89a; stroke-width:2; }
+  .pin{ cursor:pointer; }
+  .pin circle.halo{ fill:currentColor; opacity:.18; }
+  .pin circle.dot{ fill:currentColor; stroke:#fff; stroke-width:2; }
+  .pin:hover circle.halo, .pin.active circle.halo{ opacity:.32; }
+  .pin text{
+    font-size:11px; fill:var(--navy); font-weight:600;
+    paint-order:stroke; stroke:#f6fafd; stroke-width:3px; stroke-linejoin:round;
+  }
+  .card{
+    position:absolute; width:230px; background:#fff; border-radius:14px;
+    box-shadow:0 12px 28px rgba(11,39,64,.18); padding:16px 18px;
+    opacity:0; pointer-events:none; transform:translateY(6px);
+    transition:opacity .15s ease, transform .15s ease;
+    border-top:4px solid var(--blue);
+  }
+  .card.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  .card h3{ margin:0 0 4px; font-size:1.05rem; }
+  .card .region{ font-size:.75rem; color:#5b7386; margin-bottom:10px; }
+  .card .row{ display:flex; justify-content:space-between; font-size:.82rem; margin:4px 0; color:#33475a; }
+  .card .row span:first-child{ color:#7a8fa0; }
+  .card .pill{
+    display:inline-block; margin-top:8px; padding:3px 10px; border-radius:999px;
+    font-size:.75rem; font-weight:600; color:#fff;
+  }
+  .card .safety{ margin-top:10px; font-size:.78rem; color:#8a5a1f; background:#fff6e6; padding:8px 10px; border-radius:8px; }
+  .legend{ display:flex; gap:18px; justify-content:center; margin-top:18px; font-size:.82rem; color:#3a5670; }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+  .legend i{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+  footer{ text-align:center; padding:24px; font-size:.8rem; color:#7a8fa0; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">浪誌 TIDELOG</div>
+  <div class="note">互動地圖原型・僅示範 5 個浪點，尚未接上真實浪況資料</div>
+</header>
+
+<main>
+  <h1>互動式浪點地圖（原型）</h1>
+  <p class="sub">滑鼠移到圖釘上（手機點一下）即可看到該浪點的資料卡片。目前是手動放置座標的示範版本，資料沿用現有浪點資料庫內容。</p>
+
+  <div class="stage" id="stage">
+    <svg viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
+      <path class="island" d="
+        M 195 35
+        C 230 40, 255 70, 260 110
+        C 268 160, 250 190, 265 230
+        C 280 280, 300 340, 290 400
+        C 282 460, 300 500, 285 560
+        C 272 610, 280 650, 255 690
+        C 235 725, 225 745, 200 775
+        C 188 750, 185 725, 165 695
+        C 140 655, 130 610, 118 560
+        C 108 505, 118 460, 105 405
+        C 94 350, 100 295, 92 240
+        C 86 195, 100 155, 108 110
+        C 116 72, 150 42, 195 35
+        Z" />
+
+      <!-- 5 個示範浪點（手動標定座標，示意用非精準GIS） -->
+      <g class="pin" data-id="wushi" data-color="#3fce8a" transform="translate(238,150)">
+        <circle class="halo" r="16"></circle>
+        <circle class="dot" r="6"></circle>
+        <text x="12" y="4">烏石港</text>
+      </g>
+
+      <g class="pin" data-id="zhongjiao" data-color="#f4b13a" transform="translate(178,120)">
+        <circle class="halo" r="16"></circle>
+        <circle class="dot" r="6"></circle>
+        <text x="-70" y="4">中角灣</text>
+      </g>
+
+      <g class="pin" data-id="jinzun" data-color="#ff5b5b" transform="translate(275,430)">
+        <circle class="halo" r="16"></circle>
+        <circle class="dot" r="6"></circle>
+        <text x="12" y="4">台東金樽</text>
+      </g>
+
+      <g class="pin" data-id="yuguang" data-color="#3fce8a" transform="translate(140,590)">
+        <circle class="halo" r="16"></circle>
+        <circle class="dot" r="6"></circle>
+        <text x="-78" y="4">台南漁光島</text>
+      </g>
+
+      <g class="pin" data-id="nanwan" data-color="#f4b13a" transform="translate(198,745)">
+        <circle class="halo" r="16"></circle>
+        <circle class="dot" r="6"></circle>
+        <text x="12" y="4">恆春南灣</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:#3fce8a"></i>初學友善</span>
+    <span><i style="background:#f4b13a"></i>中階</span>
+    <span><i style="background:#ff5b5b"></i>進階</span>
+  </div>
+
+  <p class="sub" style="margin-top:28px;">
+    這只是視覺與互動原型：台灣輪廓是簡化手繪 SVG（非精確 GIS 座標），5 個浪點位置也是手動微調到看起來對的位置，不是真實經緯度換算。
+    如果方向確定，下一步可以：(1) 換成更準確的 SVG 地圖或改用 Leaflet.js 真實地圖 (2) 15 個浪點全部上圖 (3) 卡片改接即時浪況資料（機器人 CWA/Open-Meteo 資料）。
+  </p>
+</main>
+
+<footer>浪誌 TIDELOG — 互動地圖原型，2026-07-29</footer>
+
+<script>
+  const DATA = {
+    wushi:    { name:"烏石港", region:"北部", wind:"西／西南／南", level:"初～中階", pill:"適合初學", color:"#3fce8a", safety:"防波堤北側礁岩區，注意退流" },
+    zhongjiao:{ name:"中角灣", region:"北部", wind:"南／西南／西", level:"中階", pill:"浪型多變", color:"#f4b13a", safety:"礁岩地形，浪型多變，注意退流" },
+    jinzun:   { name:"台東金樽", region:"東部", wind:"西／西北／西南", level:"進階", pill:"經驗者優先", color:"#ff5b5b", safety:"礁岩型，退潮大石裸露，建議有經驗者入水" },
+    yuguang:  { name:"台南漁光島", region:"南部", wind:"東／東南／東北", level:"初學", pill:"適合長板", color:"#3fce8a", safety:"沙灘型浪點，浪小適合長板，注意岸邊砂洲與潮汐變化" },
+    nanwan:   { name:"恆春南灣", region:"南部・恆春", wind:"北／東北／西北", level:"初～中階", pill:"夏季熱門", color:"#f4b13a", safety:"熱門觀光沙灘，人潮多，夏季水母頻繁，注意衝浪區域劃分" },
+  };
+
+  const stage = document.getElementById("stage");
+  let card = null;
+
+  function buildCard(d, color){
+    const el = document.createElement("div");
+    el.className = "card";
+    el.innerHTML = `
+      <h3>${d.name}</h3>
+      <div class="region">${d.region}</div>
+      <div class="row"><span>陸風</span><span>${d.wind}</span></div>
+      <div class="row"><span>難度</span><span>${d.level}</span></div>
+      <span class="pill" style="background:${color}">${d.pill}</span>
+      <div class="safety">⚠️ ${d.safety}</div>
+    `;
+    return el;
+  }
+
+  document.querySelectorAll(".pin").forEach(pin => {
+    const id = pin.dataset.id;
+    const color = pin.dataset.color;
+    pin.style.color = color;
+    const d = DATA[id];
+
+    function showCard(){
+      document.querySelectorAll(".pin").forEach(p => p.classList.remove("active"));
+      pin.classList.add("active");
+      if (card) card.remove();
+      card = buildCard(d, color);
+      stage.appendChild(card);
+
+      const svg = pin.closest("svg");
+      const pt = svg.createSVGPoint();
+      const ctm = pin.getScreenCTM();
+      const rect = stage.getBoundingClientRect();
+      const svgPos = ctm ? new DOMPoint(0,0).matrixTransform(ctm) : {x:0,y:0};
+
+      let left = svgPos.x - rect.left + 20;
+      let top  = svgPos.y - rect.top - 40;
+      if (left + 230 > rect.width) left = svgPos.x - rect.left - 250;
+      card.style.left = Math.max(8, left) + "px";
+      card.style.top  = Math.max(8, top) + "px";
+      requestAnimationFrame(() => card.classList.add("show"));
+    }
+
+    pin.addEventListener("mouseenter", showCard);
+    pin.addEventListener("click", showCard);
+  });
+
+  stage.addEventListener("click", (e) => {
+    if (!e.target.closest(".pin") && card){
+      card.remove(); card = null;
+      document.querySelectorAll(".pin").forEach(p => p.classList.remove("active"));
+    }
+  });
+</script>
+
+</body>
+</html>
