@@ -43,7 +43,7 @@ def nav(prefix, active):
     <li><a href="{prefix}index.html#spots">浪點資料庫</a></li>
     <li><a{cls("map")} href="{prefix}map.html">浪點地圖</a></li>
     <li><a{cls("contact")} href="{prefix}contact.html">聯絡我們</a></li>
-    <li><a{cls("subscribe")} href="{prefix}subscribe.html">訂閱最新浪況</a></li>
+    <li><a{cls("subscribe")} href="{prefix}subscribe.html">訂閱浪況機器人</a></li>
   </ul>
 </nav>
 '''
@@ -81,7 +81,7 @@ def footer(prefix):
     <li><a href="{prefix}index.html#spots">浪點資料庫</a></li>
     <li><a href="{prefix}map.html">浪點地圖</a></li>
     <li><a href="{prefix}contact.html">聯絡我們</a></li>
-    <li><a href="{prefix}subscribe.html">訂閱最新浪況</a></li>
+    <li><a href="{prefix}subscribe.html">訂閱浪況機器人</a></li>
   </ul>
   <div class="footer-bottom">Copyright © 浪誌 TIDELOG. All rights reserved.　草稿 v3・多頁版</div>
 </footer>
@@ -185,11 +185,6 @@ index_body = f'''{nav("./", "home")}
     <source src="./videos/hero-surf.mp4" type="video/mp4">
   </video>
   <div class="hero-scrim" aria-hidden="true"></div>
-  <div class="hero-tickets">
-    <div class="ticket"><span class="dot green"></span>烏石港・浪高 1.4m</div>
-    <div class="ticket"><span class="dot amber"></span>金樽・浪高 1.8m</div>
-    <div class="ticket"><span class="dot red"></span>外澳・浪高 1.9m</div>
-  </div>
   <div class="hero-inner">
     <span class="eyebrow">台灣衝浪筆記</span>
     <h1>讀懂台灣的<em>每一道浪</em></h1>
@@ -504,7 +499,10 @@ with open(f"{ROOT}/contact.html", "w") as f:
 # subscribe.html
 subscribe_body = f'''{nav("./", "subscribe")}
 <div class="simple-page">
-  <h1>訂閱最新浪況</h1>
+  <div class="subscribe-heading">
+    <img class="bot-avatar" src="./images/bot-avatar.png" alt="浪況機器人大頭貼" width="72" height="72" loading="lazy">
+    <h1>WaveForecast浪況機器人</h1>
+  </div>
   <p class="lead">加入「浪誌 TIDELOG」的 LINE 浪況機器人好友，每天 05:00 收到專屬浪況早報，隨時打浪點名稱查即時浪高、風向、潮汐。</p>
 
   <div class="line-cta">
@@ -534,7 +532,7 @@ subscribe_body = f'''{nav("./", "subscribe")}
 {footer("./")}'''
 
 with open(f"{ROOT}/subscribe.html", "w") as f:
-    f.write(head("./", "訂閱最新浪況", "訂閱浪誌 TIDELOG 最新浪況與文章通知") + subscribe_body + FOOT)
+    f.write(head("./", "WaveForecast浪況機器人", "訂閱浪誌 TIDELOG 最新浪況與文章通知") + subscribe_body + FOOT)
 
 print("contact.html + subscribe.html written")
 

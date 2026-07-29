@@ -76,11 +76,6 @@
   .btn.ghost{ border-color:rgba(242,248,252,.7); color:#f2f8fc; background:transparent; }
   .btn.ghost:hover{ background:#f2f8fc; color:var(--navy); }
 
-  .hero-tickets{ position:absolute; top:5.5rem; left:0; right:0; z-index:2; display:flex; gap:.8rem; padding:0 clamp(1.2rem,4vw,3rem); overflow-x:auto; }
-  .ticket{ flex:0 0 auto; background:rgba(255,255,255,.75); border:1px solid rgba(11,39,64,.14); backdrop-filter:blur(6px); color:var(--navy); padding:.55rem .9rem; border-radius:3px; font-size:.78rem; display:flex; align-items:center; gap:.5rem; }
-  .ticket .dot{ width:.5rem; height:.5rem; border-radius:50%; }
-  .dot.green{ background:#3fce8a; } .dot.amber{ background:#f4b13a; } .dot.red{ background:#ff5b5b; }
-
   /* ── section shell ──────────────────────────────────── */
   .section{ padding:clamp(2.4rem,6vw,4.5rem) clamp(1.2rem,4vw,3rem); }
   .section-head{ display:flex; align-items:baseline; justify-content:space-between; gap:1rem; margin-bottom:1.6rem; flex-wrap:wrap; }
@@ -269,3 +264,8 @@
   margin-top:.5rem; font-size:.76rem; color:#8a5a1f; background:#fff6e6;
   padding:.5rem .6rem; border-radius:6px;
 }
+
+/* ── 訂閱頁大頭貼標題 ─────────────────────────────────── */
+.subscribe-heading{ display:flex; align-items:center; gap:1rem; margin-bottom:.6rem; }
+.subscribe-heading .bot-avatar{ width:72px; height:72px; border-radius:50%; border:2px solid var(--rule); flex-shrink:0; }
+.subscribe-heading h1{ margin:0; }
