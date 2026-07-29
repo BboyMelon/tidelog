@@ -1,11 +1,20 @@
 #!/usr/bin/env python3
 import os
 import json
+import hashlib
 
 # ROOT 自動抓「這個腳本所在資料夾的上一層」= tidelog-site/ 專案根目錄
 # 所以不管在誰的電腦上，只要資料夾結構不變，這個腳本都能正常執行
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SCRIPT_DIR)
+
+def _css_version() -> str:
+    """styles.css 內容的短hash，當作cache-busting query參數。
+    每次改CSS內容雜湊就會變，強迫瀏覽器（尤其手機Safari）抓新版，不用使用者自己清快取。"""
+    with open(f"{ROOT}/css/styles.css", "rb") as f:
+        return hashlib.md5(f.read()).hexdigest()[:8]
+
+CSS_VERSION = _css_version()
 
 def head(prefix, title, desc=""):
     return f'''<!DOCTYPE html>
@@ -15,7 +24,7 @@ def head(prefix, title, desc=""):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title}｜浪誌 TIDELOG</title>
 <meta name="description" content="{desc}">
-<link rel="stylesheet" href="{prefix}css/styles.css">
+<link rel="stylesheet" href="{prefix}css/styles.css?v={CSS_VERSION}">
 </head>
 <body>
 '''

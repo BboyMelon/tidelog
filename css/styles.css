@@ -59,9 +59,13 @@
   .navlinks a{ text-decoration:none; padding-bottom:3px; border-bottom:2px solid transparent; color:var(--page-text); white-space:nowrap; }
   .navlinks a.on, .navlinks a:hover{ border-color:var(--blue); }
 
-  /* ── 小螢幕：nav 換行後縮小字級跟間距，維持可讀性 ──────── */
+  /* ── 小螢幕：nav 換行後縮小字級跟間距，logo也縮小維持可讀性 ── */
   @media (max-width: 640px){
-    nav.site{ padding:.9rem clamp(1rem,4vw,2rem); }
+    nav.site{ padding:.7rem clamp(1rem,4vw,2rem); }
+    .brand{ gap:.4rem; padding:.35rem .6rem .35rem .45rem; }
+    .brand .mark{ width:24px; height:19px; }
+    .brand .zh{ font-size:.92rem; }
+    .brand .en{ font-size:.56rem; }
     .navlinks{ width:100%; gap:.5rem 1rem; font-size:.82rem; }
   }
 
