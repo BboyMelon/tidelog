@@ -53,8 +53,7 @@ def nav(prefix, active):
   <ul class="navlinks">
     <li><a{cls("home")} href="{prefix}index.html">首頁</a></li>
     <li><a{cls("articles")} href="{prefix}articles.html">衝浪文章</a></li>
-    <li><a href="{prefix}index.html#spots">浪點資料庫</a></li>
-    <li><a{cls("map")} href="{prefix}map.html">浪點地圖</a></li>
+    <li><a href="{prefix}index.html#map">浪點地圖</a></li>
     <li><a{cls("contact")} href="{prefix}contact.html">聯絡我們</a></li>
     <li><a{cls("subscribe")} href="{prefix}subscribe.html">訂閱浪況機器人</a></li>
   </ul>
@@ -91,12 +90,11 @@ def footer(prefix):
   <ul class="footer-nav">
     <li><a href="{prefix}index.html">首頁</a></li>
     <li><a href="{prefix}articles.html">衝浪文章</a></li>
-    <li><a href="{prefix}index.html#spots">浪點資料庫</a></li>
-    <li><a href="{prefix}map.html">浪點地圖</a></li>
+    <li><a href="{prefix}index.html#map">浪點地圖</a></li>
     <li><a href="{prefix}contact.html">聯絡我們</a></li>
     <li><a href="{prefix}subscribe.html">訂閱浪況機器人</a></li>
   </ul>
-  <div class="footer-bottom">Copyright © 浪誌 TIDELOG. All rights reserved.　草稿 v3・多頁版</div>
+  <div class="footer-bottom">Copyright © 浪誌 TIDELOG. All rights reserved.</div>
 </footer>
 '''
 
@@ -115,53 +113,99 @@ articles = [
 ]
 
 # ─────────────────────────────────────────────────────────
-# 浪點資料庫（同步自機器人 config.py 的 SURF_SPOTS_CONFIG，
-# 陸風方向／安全提醒文字是機器人原始資料；「難度」是機器人本身沒有存的
-# 靜態欄位（機器人是每天用即時浪高動態算 GoOcean 分級，不是固定值），
-# 這裡依安全提醒的地形描述人工給一個概略難度，方便新手瀏覽選點）
-spots = [
-    dict(name="金山沙珠灣", region="北部", wind="南／西南", level="中階",
-         pill="浪況適中", dot="#f4b13a", safety="注意水母與左側礁石區"),
-    dict(name="翡翠灣", region="北部", wind="南／東南", level="中階",
-         pill="私人海灣", dot="#f4b13a", safety="私人海灣，西側礁岩勿靠近"),
-    dict(name="中角灣", region="北部", wind="南／西南／西", level="中階",
-         pill="浪型多變", dot="#f4b13a", safety="礁岩地形，浪型多變，注意退流"),
-    dict(name="烏石港", region="北部", wind="西／西南／南", level="初～中階",
-         pill="適合初學", dot="#3fce8a", safety="防波堤北側礁岩區，注意退流"),
-    dict(name="宜蘭外澳", region="北部", wind="西／西南／南", level="進階",
-         pill="浪大刺激", dot="#ff5b5b", safety="注意防波堤旁離岸流"),
-    dict(name="松柏港福德里", region="中部", wind="東／東南／東北", level="中階",
-         pill="冬季浪佳", dot="#f4b13a", safety="冬季東北季風浪較佳，注意強流"),
-    dict(name="外埔漁港", region="中部", wind="東／東南", level="初～中階",
-         pill="適合練習", dot="#3fce8a", safety="沙灘型浪點，注意離岸流與砂泥底質"),
-    dict(name="花蓮北濱公園", region="東部", wind="西／西北／西南", level="中～進階",
-         pill="暗礁注意", dot="#ff5b5b", safety="礫石灘，退潮暗礁多，注意強離岸流"),
-    dict(name="花蓮環保公園", region="東部", wind="西／西北／西南", level="中～進階",
-         pill="浪崩快", dot="#ff5b5b", safety="礫石底質，浪崩快，注意下浪時機"),
-    dict(name="台東金樽", region="東部", wind="西／西北／西南", level="進階",
-         pill="經驗者優先", dot="#ff5b5b", safety="礁岩型，退潮大石裸露，建議有經驗者入水"),
-    dict(name="台東東河", region="東部", wind="西／西北／西南", level="中階",
-         pill="人潮注意", dot="#f4b13a", safety="沙礫混合底質，注意人潮與流向"),
-    dict(name="台南漁光島", region="南部", wind="東／東南／東北", level="初學",
-         pill="適合長板", dot="#3fce8a", safety="沙灘型浪點，浪小適合長板，注意岸邊砂洲與潮汐變化"),
-    dict(name="恆春南灣", region="南部・恆春", wind="北／東北／西北", level="初～中階",
-         pill="夏季熱門", dot="#f4b13a", safety="熱門觀光沙灘，人潮多，夏季水母頻繁，注意衝浪區域劃分"),
-    dict(name="恆春九鵬", region="南部・恆春", wind="西／西北／西南", level="進階",
-         pill="強流注意", dot="#ff5b5b", safety="半島東側礁岩地形，浪型多變，注意強流與離岸流"),
-    dict(name="恆春佳樂水", region="南部・恆春", wind="西／西北", level="中～進階",
-         pill="河口地形", dot="#f4b13a", safety="河口地形，退潮時注意暗礁"),
+# 首頁「浪點地圖」區塊：互動地圖 + 海象觀測／直播資源
+# 座標是浪點實際地理位置（真實經緯度，非機器人 STATION_COORDS 那種共用浮標外海座標）。
+# 松柏港福德里／外埔漁港兩筆座標為查證後修正：機器人 TIDE_STATION_MAP 原本對應到
+# 雲林縣的潮汐站，但實際地點分別在台中大安溪口、苗栗後龍——這是機器人那邊潮汐站
+# 選錯地區的既有問題，跟這裡的地圖座標無關，已另外記錄提醒使用者。
+# 2026-07-30：原本首頁另外維護一份手打的「浪點資料庫」靜態卡片清單，陸風/難度都是
+# 人工填的固定值，跟機器人動態算的 GoOcean 分級容易脫節（曾經漏改名稱、漏加新浪點）。
+# 改成直接嵌入這個互動地圖後，浪高/週期/風向/分級都改成即時抓機器人 API，不會再有
+# 兩邊資料兜不起來的問題，原本獨立的 map.html 頁面也一併移除，內容全部併進首頁。
+MAP_SPOTS = [
+    dict(name="金山中角灣（沙珠灣）", category="北部", lat=25.222, lon=121.636,
+         safety="礁岩地形，浪型多變，注意退流、水母與左側礁石區"),
+    dict(name="翡翠灣", category="北部", lat=25.199, lon=121.687,
+         safety="私人海灣，西側礁岩勿靠近"),
+    dict(name="烏石港", category="北部", lat=24.860, lon=121.831,
+         safety="防波堤北側礁岩區，注意退流"),
+    dict(name="宜蘭外澳", category="北部", lat=24.870, lon=121.834,
+         safety="注意防波堤旁離岸流"),
+    dict(name="福隆", category="北部", lat=25.017, lon=121.945,
+         safety="雙溪出海口地形，注意河口離岸流"),
+    dict(name="松柏港福德里", category="中部", lat=24.4015, lon=120.5809,
+         safety="冬季東北季風浪較佳，注意強流"),
+    dict(name="外埔漁港", category="中部", lat=24.6499, lon=120.7717,
+         safety="沙灘型浪點，注意離岸流與砂泥底質"),
+    dict(name="花蓮北濱公園", category="東部", lat=23.980, lon=121.618,
+         safety="礫石灘，退潮暗礁多，注意強離岸流"),
+    dict(name="花蓮環保公園", category="東部", lat=23.985, lon=121.615,
+         safety="礫石底質，浪崩快，注意下浪時機"),
+    dict(name="台東金樽", category="東部", lat=23.152, lon=121.397,
+         safety="礁岩型，退潮大石裸露，建議有經驗者入水"),
+    dict(name="台東東河", category="東部", lat=23.128, lon=121.371,
+         safety="沙礫混合底質，注意人潮與流向"),
+    dict(name="台南漁光島", category="南部", lat=22.984, lon=120.146,
+         safety="沙灘型浪點，浪小適合長板，注意岸邊砂洲與潮汐變化"),
+    dict(name="恆春南灣", category="南部・恆春", lat=21.939, lon=120.751,
+         safety="熱門觀光沙灘，人潮多，夏季水母頻繁，注意衝浪區域劃分"),
+    dict(name="恆春九鵬", category="南部・恆春", lat=22.011, lon=120.845,
+         safety="半島東側礁岩地形，浪型多變，注意強流與離岸流"),
+    dict(name="恆春佳樂水", category="南部・恆春", lat=22.021, lon=120.856,
+         safety="河口地形，退潮時注意暗礁"),
 ]
 
-def spot_card(s):
-    return f'''    <div class="spot-card">
-      <div class="row1"><h3>{s['name']}</h3><span class="region">{s['region']}</span></div>
-      <div class="stats-row">
-        <div class="stat-block"><div class="label">陸風</div><div class="val">{s['wind']}</div></div>
-        <div class="stat-block"><div class="label">難度</div><div class="val">{s['level']}</div></div>
-      </div>
-      <div class="level-pill"><span class="dot" style="background:{s['dot']}"></span>{s['pill']}</div>
-      <p class="safety">{s['safety']}</p>
-    </div>'''
+LIVE_API_URL = "https://surf-robot.onrender.com/api/live-conditions"
+
+# 跟 LINE 機器人 webhook.py build_resources_flex() 同一份資料，網站這邊照抄一份
+# 純連結展示，機器人那邊改了記得回來同步這裡
+RESOURCE_LINKS = [
+    ("🌊 中央氣象署 CWA 海象資訊", "https://www.cwa.gov.tw/V8/C/M/OBS_Marine.html"),
+    ("🔬 國家海洋研究院 NODASS", "https://nodass.namr.gov.tw/"),
+    ("🏄 Surf-Forecast.com", "https://www.surf-forecast.com/"),
+    ("🗺️ Windy 動態地圖", "https://www.windy.com/?waves,23.8,121.8,6"),
+]
+
+LIVESTREAMS = [
+    ("北部浪況直播", [
+        ("中角灣", "https://www.youtube.com/watch?v=iJphhU-iaTA"),
+        ("中角灣（國海院）", "https://www.youtube.com/watch?v=Jpg_V7f7rW8"),
+        ("白沙灣", "https://www.youtube.com/watch?v=FbB8WDUXXqU"),
+        ("外澳沙灘", "https://www.youtube.com/watch?v=UgoT-QTbYvo"),
+        ("福隆海水浴場", "https://www.youtube.com/watch?v=Rhkr8qJOFO4"),
+        ("福隆（國海院）", "https://www.youtube.com/watch?v=Yhj5qvupJDk"),
+        ("無尾港", "https://www.youtube.com/watch?v=7S0lZRj9ViY"),
+    ]),
+    ("東部浪況直播", [
+        ("金樽", "https://www.youtube.com/watch?v=q3KJt-SZc2s"),
+        ("金樽休憩中心", "https://www.youtube.com/watch?v=ZdqHgQwvZOw"),
+        ("都歷遊客中心", "https://www.youtube.com/watch?v=JhQuR77AR7U"),
+        ("杉原灣海灘", "https://www.youtube.com/watch?v=VqS_Y8ZCj6M"),
+    ]),
+    ("南部浪況直播", [
+        ("旗津海灘", "https://www.youtube.com/watch?v=ka7FV0sCvxQ"),
+        ("旗津海灘（國海院）", "https://www.youtube.com/watch?v=An0oUZBZtG0"),
+        ("南灣", "https://www.youtube.com/watch?v=jUnFuJSj0OU"),
+        ("佳樂水", "https://www.youtube.com/watch?v=35ov7d8zLyE"),
+        ("佳樂水（國海院）", "https://www.youtube.com/watch?v=8bn_-PbneiI"),
+    ]),
+]
+
+def resource_links_html():
+    links = "\n".join(f'    <a href="{url}" target="_blank" rel="noopener">{label}</a>' for label, url in RESOURCE_LINKS)
+    return f'  <div class="resource-links">\n{links}\n  </div>'
+
+def livestream_groups_html():
+    groups = []
+    for title, items in LIVESTREAMS:
+        lis = "\n".join(f'      <li><a href="{url}" target="_blank" rel="noopener">▶ {name}</a></li>' for name, url in items)
+        groups.append(f'''    <div class="livestream-group">
+      <h4>{title}</h4>
+      <ul>
+{lis}
+      </ul>
+    </div>''')
+    return '  <div class="livestream-groups">\n' + "\n".join(groups) + '\n  </div>'
 
 
 def feat_card(a, linked=True, in_articles_page=False):
@@ -203,7 +247,7 @@ index_body = f'''{nav("./", "home")}
     <h1>讀懂台灣的<em>每一道浪</em></h1>
     <p>從北海岸到南灣，紀錄每個浪點的浪況、地形與注意事項。</p>
     <div class="cta-row">
-      <a class="btn primary" href="#spots">瀏覽浪點資料庫</a>
+      <a class="btn primary" href="#map">瀏覽浪點地圖</a>
       <a class="btn ghost" href="./articles.html">看最新文章</a>
     </div>
   </div>
@@ -221,15 +265,124 @@ index_body = f'''{nav("./", "home")}
   </div>
 </section>
 
-<section class="grid-wrap section" id="spots">
+<section class="grid-wrap section" id="map">
   <div class="section-head">
-    <h2>浪點資料庫</h2>
-    <span class="eyebrow">全台 {len(spots)} 個浪點</span>
+    <h2>浪點地圖</h2>
+    <span class="eyebrow">全台 {len(MAP_SPOTS)} 個浪點</span>
   </div>
-  <div class="spot-grid">
-{chr(10).join(spot_card(s) for s in spots)}
+  <p class="lead" style="margin-bottom:1.4rem;">點圖釘查看各浪點的即時浪況（浪高、週期、風向、浪人分級），資料來源（中央氣象局 & Open-Meteo )</p>
+
+  <div id="map-banner" class="map-banner" hidden>
+    <span id="map-banner-text"></span>
+    <button id="map-retry" class="btn" type="button">重新查詢</button>
+  </div>
+
+  <div id="spot-map" class="spot-map"></div>
+
+  <div class="map-legend">
+    <span><i style="background:#3fce8a"></i>初學 🟢</span>
+    <span><i style="background:#f4b13a"></i>中階 🟡</span>
+    <span><i style="background:#ff5b5b"></i>進階 🔴</span>
+    <span><i style="background:#6b1414"></i>危險封閉 ⛔</span>
+    <span><i style="background:#9aa7b2"></i>暫無資料</span>
+  </div>
+  <p class="map-note">即時浪況每次開啟頁面向機器人伺服器抓取一次；伺服器若剛從休眠喚醒，第一次查詢可能要等 30-60 秒。</p>
+
+  <div class="resource-sub">
+    <h3>📊 海象觀測資源</h3>
+{resource_links_html()}
+    <h3>📺 各區浪況直播</h3>
+{livestream_groups_html()}
   </div>
 </section>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const FALLBACK_SPOTS = {json.dumps(MAP_SPOTS, ensure_ascii=False)};
+  const LIVE_API_URL = "{LIVE_API_URL}";
+  const LEVEL_COLOR = {{
+    "🟢": "#3fce8a", "🟡": "#f4b13a", "🔴": "#ff5b5b", "⛔": "#6b1414"
+  }};
+  const NO_DATA_COLOR = "#9aa7b2";
+
+  const map = L.map("spot-map", {{ scrollWheelZoom:false }}).setView([23.6, 120.9], 7.4);
+  L.tileLayer("https://{{s}}.basemaps.cartocdn.com/rastertiles/voyager/{{z}}/{{x}}/{{y}}{{r}}.png", {{
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+    maxZoom: 18
+  }}).addTo(map);
+
+  function dotIcon(color){{
+    return L.divIcon({{
+      className: "",
+      html: `<span style="display:block;width:16px;height:16px;border-radius:50%;background:${{color}};border:2px solid #fff;box-shadow:0 1px 4px rgba(11,39,64,.4);"></span>`,
+      iconSize: [16,16], iconAnchor: [8,8], popupAnchor: [0,-10]
+    }});
+  }}
+
+  function popupHTML(spot, live){{
+    let body = `<div class="spot-popup"><h3>${{spot.name}}</h3><div class="region">${{spot.category}}</div>`;
+    if (live && live.has_data){{
+      const windText = live.wind_dir ? `${{live.wind_dir}}（${{live.wind_beaufort}}級）` : "—";
+      body += `
+        <div class="row"><span>浪高</span><span>${{live.wave_height.toFixed(1)}} m</span></div>
+        <div class="row"><span>週期</span><span>${{live.wave_period.toFixed(0)}} s</span></div>
+        <div class="row"><span>風向</span><span>${{windText}}</span></div>
+        <div class="row"><span>分級</span><span>${{live.stars || ""}} ${{live.level_emoji || ""}}</span></div>`;
+    }} else if (live){{
+      body += `<div class="row"><span>浪況</span><span>暫無觀測資料</span></div>`;
+    }} else {{
+      body += `<div class="row"><span>浪況</span><span>載入中…</span></div>`;
+    }}
+    body += `<div class="safety">⚠️ ${{spot.safety}}</div></div>`;
+    return body;
+  }}
+
+  const markers = {{}};
+  FALLBACK_SPOTS.forEach(spot => {{
+    const m = L.marker([spot.lat, spot.lon], {{ icon: dotIcon(NO_DATA_COLOR) }}).addTo(map);
+    m.bindPopup(popupHTML(spot, null));
+    markers[spot.name] = m;
+  }});
+
+  function showBanner(text, showRetry){{
+    const banner = document.getElementById("map-banner");
+    document.getElementById("map-banner-text").textContent = text;
+    document.getElementById("map-retry").style.display = showRetry ? "inline-block" : "none";
+    banner.hidden = false;
+  }}
+  function hideBanner(){{ document.getElementById("map-banner").hidden = true; }}
+
+  function loadLiveConditions(){{
+    showBanner("正在抓取即時浪況…", false);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 25000);
+    fetch(LIVE_API_URL, {{ signal: controller.signal }})
+      .then(r => {{ if(!r.ok) throw new Error("HTTP " + r.status); return r.json(); }})
+      .then(data => {{
+        clearTimeout(timeout);
+        hideBanner();
+        const byName = {{}};
+        (data.spots || []).forEach(s => byName[s.name] = s);
+        FALLBACK_SPOTS.forEach(spot => {{
+          const live = byName[spot.name];
+          const marker = markers[spot.name];
+          if (!marker) return;
+          const color = live && live.has_data ? (LEVEL_COLOR[live.level_emoji] || NO_DATA_COLOR) : NO_DATA_COLOR;
+          marker.setIcon(dotIcon(color));
+          marker.setPopupContent(popupHTML(spot, live || {{ has_data:false }}));
+        }});
+      }})
+      .catch(err => {{
+        clearTimeout(timeout);
+        showBanner("目前無法取得即時浪況，伺服器可能剛從休眠中喚醒，稍後再試一次。", true);
+        console.error("[live-conditions]", err);
+      }});
+  }}
+
+  document.getElementById("map-retry").addEventListener("click", loadLiveConditions);
+  loadLiveConditions();
+</script>
 
 {footer("./")}'''
 
@@ -529,11 +682,10 @@ print(f"{len(articles)} article pages written")
 contact_body = f'''{nav("./", "contact")}
 <div class="simple-page">
   <h1>聯絡我們</h1>
-  <p class="lead">浪點資訊有誤、想投稿文章，或單純想聊衝浪，都歡迎寫信給我們。</p>
+  <p class="lead">浪點資訊有誤、想分享更多衝浪大小事，都歡迎寫信給我們。</p>
 
   <div class="contact-info">
     <span>📧 {CONTACT_EMAIL}</span>
-    <span>📍 台灣</span>
   </div>
 
   <form class="contact-form" id="contact-form">
@@ -553,7 +705,7 @@ contact_body = f'''{nav("./", "contact")}
     <p class="form-note" id="contact-status" hidden></p>
   </form>
 
-  <p class="form-note">填寫後會直接寫進後台資料庫，我們看到會盡快回覆；若表單暫時無法送出，也歡迎直接寫信到 {CONTACT_EMAIL}。</p>
+  <p class="form-note">感謝您的回饋與建議，我們會盡快回覆您；若表單暫時無法送出，也歡迎直接寫信到 {CONTACT_EMAIL}。</p>
 </div>
 
 <script>
@@ -597,7 +749,7 @@ subscribe_body = f'''{nav("./", "subscribe")}
     <img class="bot-avatar" src="./images/bot-avatar.png" alt="浪況機器人大頭貼" width="72" height="72" loading="lazy">
     <h1>WaveForecast浪況機器人</h1>
   </div>
-  <p class="lead">加入「浪誌 TIDELOG」的 LINE 浪況機器人好友，每天 05:00 收到專屬浪況早報，隨時打浪點名稱查即時浪高、風向、潮汐。</p>
+  <p class="lead">加入「浪誌 TIDELOG」的 LINE 浪況機器人好友，每天 05:00-06:00 收到專屬浪況早報，隨時打浪點名稱查即時浪高、風向、潮汐。</p>
 
   <div class="line-cta">
     <img class="line-qr" src="./images/Line＿QRcode.png" alt="加入LINE浪況機器人好友 QRCode" width="180" height="180" loading="lazy">
@@ -609,13 +761,13 @@ subscribe_body = f'''{nav("./", "subscribe")}
   </div>
 
   <ul class="subscribe-perks">
-    <li>每天 05:00 專屬浪況早報，依你的浪齡個人化推薦浪點</li>
+    <li>每天 05:00-06:00 專屬浪況早報，依你的浪齡個人化推薦浪點</li>
     <li>長浪／颱風警戒即時推播，不用自己盯氣象</li>
     <li>打浪點名稱（如「烏石港」）隨時查即時浪高、風向、潮汐時刻</li>
   </ul>
 
   <h2 class="form-heading">開通每日推播</h2>
-  <p class="lead">加好友後，還要多一個步驟才會真的收到每天 05:00 的浪況早報：在 LINE 對話裡傳「<strong>Surfer 檔案建立</strong>」（或點選單同名按鈕），依格式填寫性別／浪齡／板型／常衝浪點並回傳，送出後就會自動開通，而且每天還會依你的程度收到個人化浪點推薦。</p>
+  <p class="lead">加好友後，還要多一個步驟才會真的收到每天 05:00-06:00 的浪況早報：在 LINE 對話裡傳「<strong>Surfer 檔案建立</strong>」（或點選單同名按鈕），依格式填寫性別／浪齡／板型／常衝浪點並回傳，送出後就會自動開通，而且每天還會依你的程度收到個人化浪點推薦。</p>
 
   <div class="howto-shot">
     <img src="./images/subscribe-howto.jpg" alt="LINE對話操作示範：傳「Surfer 檔案建立」或點選單按鈕" loading="lazy">
@@ -630,161 +782,3 @@ with open(f"{ROOT}/subscribe.html", "w") as f:
 
 print("contact.html + subscribe.html written")
 
-# ─────────────────────────────────────────────────────────
-# map.html — 互動式浪點地圖
-# 座標是浪點實際地理位置（真實經緯度，非機器人 STATION_COORDS 那種共用浮標外海座標），
-# 用於在真實台灣地圖上準確標記。松柏港福德里／外埔漁港兩筆座標為查證後修正：
-# 機器人 TIDE_STATION_MAP 原本對應到雲林縣的潮汐站，但實際地點分別在台中大安溪口、
-# 苗栗後龍——這是機器人那邊潮汐站選錯地區的既有問題，跟這裡的地圖座標無關，
-# 已另外記錄提醒使用者。
-MAP_SPOTS = [
-    dict(name="金山中角灣（沙珠灣）", category="北部", lat=25.222, lon=121.636,
-         safety="礁岩地形，浪型多變，注意退流、水母與左側礁石區"),
-    dict(name="翡翠灣", category="北部", lat=25.199, lon=121.687,
-         safety="私人海灣，西側礁岩勿靠近"),
-    dict(name="烏石港", category="北部", lat=24.860, lon=121.831,
-         safety="防波堤北側礁岩區，注意退流"),
-    dict(name="宜蘭外澳", category="北部", lat=24.870, lon=121.834,
-         safety="注意防波堤旁離岸流"),
-    dict(name="福隆", category="北部", lat=25.017, lon=121.945,
-         safety="雙溪出海口地形，注意河口離岸流"),
-    dict(name="松柏港福德里", category="中部", lat=24.4015, lon=120.5809,
-         safety="冬季東北季風浪較佳，注意強流"),
-    dict(name="外埔漁港", category="中部", lat=24.6499, lon=120.7717,
-         safety="沙灘型浪點，注意離岸流與砂泥底質"),
-    dict(name="花蓮北濱公園", category="東部", lat=23.980, lon=121.618,
-         safety="礫石灘，退潮暗礁多，注意強離岸流"),
-    dict(name="花蓮環保公園", category="東部", lat=23.985, lon=121.615,
-         safety="礫石底質，浪崩快，注意下浪時機"),
-    dict(name="台東金樽", category="東部", lat=23.152, lon=121.397,
-         safety="礁岩型，退潮大石裸露，建議有經驗者入水"),
-    dict(name="台東東河", category="東部", lat=23.128, lon=121.371,
-         safety="沙礫混合底質，注意人潮與流向"),
-    dict(name="台南漁光島", category="南部", lat=22.984, lon=120.146,
-         safety="沙灘型浪點，浪小適合長板，注意岸邊砂洲與潮汐變化"),
-    dict(name="恆春南灣", category="南部・恆春", lat=21.939, lon=120.751,
-         safety="熱門觀光沙灘，人潮多，夏季水母頻繁，注意衝浪區域劃分"),
-    dict(name="恆春九鵬", category="南部・恆春", lat=22.011, lon=120.845,
-         safety="半島東側礁岩地形，浪型多變，注意強流與離岸流"),
-    dict(name="恆春佳樂水", category="南部・恆春", lat=22.021, lon=120.856,
-         safety="河口地形，退潮時注意暗礁"),
-]
-
-LIVE_API_URL = "https://surf-robot.onrender.com/api/live-conditions"
-
-map_body = f'''{nav("./", "map")}
-<div class="map-page">
-  <h1>浪點地圖</h1>
-  <p class="lead">點圖釘查看該浪點的即時浪況（浪高、週期、風向、GoOcean分級）。資料來源跟 LINE 機器人相同，每次開啟頁面即時抓取。</p>
-
-  <div id="map-banner" class="map-banner" hidden>
-    <span id="map-banner-text"></span>
-    <button id="map-retry" class="btn" type="button">重新查詢</button>
-  </div>
-
-  <div id="spot-map" class="spot-map"></div>
-
-  <div class="map-legend">
-    <span><i style="background:#3fce8a"></i>初學 🟢</span>
-    <span><i style="background:#f4b13a"></i>中階 🟡</span>
-    <span><i style="background:#ff5b5b"></i>進階 🔴</span>
-    <span><i style="background:#6b1414"></i>危險封閉 ⛔</span>
-    <span><i style="background:#9aa7b2"></i>暫無資料</span>
-  </div>
-  <p class="map-note">即時浪況每次開啟頁面向機器人伺服器抓取一次；伺服器若剛從休眠喚醒，第一次查詢可能要等 30-60 秒。</p>
-</div>
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-  const FALLBACK_SPOTS = {json.dumps(MAP_SPOTS, ensure_ascii=False)};
-  const LIVE_API_URL = "{LIVE_API_URL}";
-  const LEVEL_COLOR = {{
-    "🟢": "#3fce8a", "🟡": "#f4b13a", "🔴": "#ff5b5b", "⛔": "#6b1414"
-  }};
-  const NO_DATA_COLOR = "#9aa7b2";
-
-  const map = L.map("spot-map", {{ scrollWheelZoom:false }}).setView([23.6, 120.9], 7.4);
-  L.tileLayer("https://{{s}}.basemaps.cartocdn.com/light_all/{{z}}/{{x}}/{{y}}{{r}}.png", {{
-    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-    maxZoom: 18
-  }}).addTo(map);
-
-  function dotIcon(color){{
-    return L.divIcon({{
-      className: "",
-      html: `<span style="display:block;width:16px;height:16px;border-radius:50%;background:${{color}};border:2px solid #fff;box-shadow:0 1px 4px rgba(11,39,64,.4);"></span>`,
-      iconSize: [16,16], iconAnchor: [8,8], popupAnchor: [0,-10]
-    }});
-  }}
-
-  function popupHTML(spot, live){{
-    let body = `<div class="spot-popup"><h3>${{spot.name}}</h3><div class="region">${{spot.category}}</div>`;
-    if (live && live.has_data){{
-      const windText = live.wind_dir ? `${{live.wind_dir}}（${{live.wind_beaufort}}級）` : "—";
-      body += `
-        <div class="row"><span>浪高</span><span>${{live.wave_height.toFixed(1)}} m</span></div>
-        <div class="row"><span>週期</span><span>${{live.wave_period.toFixed(0)}} s</span></div>
-        <div class="row"><span>風向</span><span>${{windText}}</span></div>
-        <div class="row"><span>分級</span><span>${{live.stars || ""}} ${{live.level_emoji || ""}}</span></div>`;
-    }} else if (live){{
-      body += `<div class="row"><span>浪況</span><span>暫無觀測資料</span></div>`;
-    }} else {{
-      body += `<div class="row"><span>浪況</span><span>載入中…</span></div>`;
-    }}
-    body += `<div class="safety">⚠️ ${{spot.safety}}</div></div>`;
-    return body;
-  }}
-
-  const markers = {{}};
-  FALLBACK_SPOTS.forEach(spot => {{
-    const m = L.marker([spot.lat, spot.lon], {{ icon: dotIcon(NO_DATA_COLOR) }}).addTo(map);
-    m.bindPopup(popupHTML(spot, null));
-    markers[spot.name] = m;
-  }});
-
-  function showBanner(text, showRetry){{
-    const banner = document.getElementById("map-banner");
-    document.getElementById("map-banner-text").textContent = text;
-    document.getElementById("map-retry").style.display = showRetry ? "inline-block" : "none";
-    banner.hidden = false;
-  }}
-  function hideBanner(){{ document.getElementById("map-banner").hidden = true; }}
-
-  function loadLiveConditions(){{
-    showBanner("正在抓取即時浪況…", false);
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 25000);
-    fetch(LIVE_API_URL, {{ signal: controller.signal }})
-      .then(r => {{ if(!r.ok) throw new Error("HTTP " + r.status); return r.json(); }})
-      .then(data => {{
-        clearTimeout(timeout);
-        hideBanner();
-        const byName = {{}};
-        (data.spots || []).forEach(s => byName[s.name] = s);
-        FALLBACK_SPOTS.forEach(spot => {{
-          const live = byName[spot.name];
-          const marker = markers[spot.name];
-          if (!marker) return;
-          const color = live && live.has_data ? (LEVEL_COLOR[live.level_emoji] || NO_DATA_COLOR) : NO_DATA_COLOR;
-          marker.setIcon(dotIcon(color));
-          marker.setPopupContent(popupHTML(spot, live || {{ has_data:false }}));
-        }});
-      }})
-      .catch(err => {{
-        clearTimeout(timeout);
-        showBanner("目前無法取得即時浪況，伺服器可能剛從休眠中喚醒，稍後再試一次。", true);
-        console.error("[live-conditions]", err);
-      }});
-  }}
-
-  document.getElementById("map-retry").addEventListener("click", loadLiveConditions);
-  loadLiveConditions();
-</script>
-
-{footer("./")}'''
-
-with open(f"{ROOT}/map.html", "w") as f:
-    f.write(head("./", "浪點地圖", "互動式台灣浪點地圖，點圖釘查看即時浪況") + map_body + FOOT)
-
-print("map.html written")
