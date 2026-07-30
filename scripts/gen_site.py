@@ -108,10 +108,10 @@ articles = [
          img="./images/wushi_surfbackground.png", wave_cls="waves-a", read="6 分", stub=False),
     dict(id="beginner-spots", tag="衝浪知識", region="新手起步", title="新手衝浪去哪邊好？北中南推薦浪點",
          desc="沙灘地形、浪高別超過 1.2m、離岸流少——三個挑浪點原則，附北中南各一個新手友善浪點。",
-         img=None, wave_cls="waves-b", read="5 分", stub=False),
+         img="./images/新手衝浪＿封面.jpg", wave_cls="waves-b", read="5 分", stub=False),
     dict(id="first-timer-safety", tag="衝浪知識", region="新手起步", title="不會游泳可以衝浪嗎？第一次下水前該知道的 3 件事",
          desc="不會游泳不是問題，問題是海況複雜、離岸流，還有沒學會讀浪跟划水——這篇整理下水前的checklist。",
-         img=None, wave_cls="waves-c", read="6 分", stub=False),
+         img="./images/Noswming＿封面.png", wave_cls="waves-c", read="6 分", stub=False),
 ]
 
 # ─────────────────────────────────────────────────────────
@@ -391,11 +391,32 @@ beginner_content = '''    <p>新手選浪點，比起「哪裡浪比較大」，
     <h2>北部：烏石港</h2>
     <p>沙灘與礁岩混合地形，衝浪教室聚集地，租板、換裝設施齊全。防波堤內側是主要練習區，退潮前後兩小時浪型比較有型。<strong>但防波堤北側礁岩區退流不小</strong>，新手不建議靠過去。</p>
 
-    <h2>中部：外埔漁港</h2>
-    <p>沙灘型浪點，浪通常偏小，很適合單純練習划水的階段。底質偏砂泥，跌倒摔板的代價比礁岩區低很多，但一樣要留意離岸流位置。</p>
+<div class="inline-figs solo">
+  <figure>
+    <img src="../images/烏石港_新手.jpg" alt="烏石港新手練習區" loading="lazy">
+    <figcaption>烏石港防波堤內側練習區</figcaption>
+  </figure>
+</div>
+
+    <h2>中部：台中松柏港</h2>
+    <p>正式站名是「松柏港福德里」，位在台中大安溪出口北岸，冬季東北季風時浪況較穩定。沙灘型浪點，浪通常偏小，很適合單純練習划水的階段，跌倒摔板的代價也比礁岩區低很多，但一樣要留意強流與離岸流位置。</p>
+
+<div class="inline-figs solo">
+  <figure>
+    <img src="../images/松柏港_新手.jpg" alt="台中松柏港新手浪點" loading="lazy">
+    <figcaption>台中松柏港（松柏港福德里）</figcaption>
+  </figure>
+</div>
 
     <h2>南部：台南漁光島</h2>
     <p>沙灘型浪點，浪小適合長板，是南部新手很常去的起點。要注意的是岸邊砂洲會隨潮汐變化，退潮時水深、流向都可能跟漲潮時不一樣。</p>
+
+<div class="inline-figs solo">
+  <figure>
+    <img src="../images/漁光島_新手.JPG" alt="台南漁光島新手浪點" loading="lazy">
+    <figcaption>台南漁光島</figcaption>
+  </figure>
+</div>
 
     <h2>下水前，先查一次即時浪況</h2>
     <p>上面三個是「平常表現」比較穩定的新手浪點，但沒有哪個浪點是「永遠安全」——同一個浪點，颱風前後或東北季風增強時，照樣可能超出新手能應付的範圍。加 LINE 浪況機器人好友，出發前打浪點名稱查一次即時浪高、風向、潮汐，比看這篇文章更準。</p>'''
@@ -405,8 +426,22 @@ first_timer_safety_content = '''    <p>常有人問：不會游泳可以學衝�
     <h2>海況比你想的複雜</h2>
     <p>能不能下水，不是看「今天有沒有出太陽」就能判斷。夏天離台灣很遠的颱風，照樣可能把大浪送過來；新手常常想「颱風那麼遠應該還好吧」，結果海況早就超出能應付的範圍。找教練或有經驗的浪友問清楚今天適不適合新手，比自己憑感覺猜準得多——出發前也可以先打浪點名稱問問機器人，浪高、週期跟分級燈號一次看到。</p>
 
+<div class="inline-figs solo">
+  <figure>
+    <img src="../images/平靜海域_Noswming.jpg" alt="表面看似平靜的海域" loading="lazy">
+    <figcaption>看起來平靜，不代表適合新手下水</figcaption>
+  </figure>
+</div>
+
     <h2>離岸流才是真正的敵人</h2>
     <p>離岸流是海浪拍上岸後，海水匯聚成一股往外海流回去的力量。沒有浮具又不知道怎麼脫離的話，很容易被帶到外海，一慌就更容易溺水。辨識訣竅：水色比周圍混濁、浪快碎的區域卻沒有白沫、水面出現一排垂直於岸邊的小波紋——這三個徵兆同時出現，那多半就是離岸流的位置。第一次到不熟的浪點，務必先問教練今天的地形怎麼看。</p>
+
+<div class="inline-figs solo">
+  <figure>
+    <img src="../images/離岸流_Noswming.jpg" alt="離岸流示意" loading="lazy">
+    <figcaption>離岸流：水色混濁、快碎卻沒有白沫的區域要留意</figcaption>
+  </figure>
+</div>
 
     <h2>沒學會讀浪跟划水，永遠站不起來</h2>
     <p>體驗課能站起來，很多時候是教練幫忙挑浪、推板的功勞。之後自己租板練習才會發現「怎麼突然站不起來了」——這不是退步，是進入真正要學「讀浪」跟「划水」的階段，本來就會經歷這段卡關期，撐過去就是自己的功力。</p>
@@ -418,6 +453,13 @@ first_timer_safety_content = '''    <p>常有人問：不會游泳可以學衝�
       <li>裝備到位：腳繩、合身防磨衣，帥不帥不重要，能不能平安回家比較重要</li>
       <li>把離岸流的三個徵兆記起來，哪怕只記得「顏色不同、沒有白沫的水道要小心」也好</li>
     </ul>
+
+<div class="inline-figs solo">
+  <figure>
+    <img src="../images/衝浪腳繩＿Noswiming.png" alt="衝浪腳繩" loading="lazy">
+    <figcaption>下水前先確認腳繩有沒有綁好</figcaption>
+  </figure>
+</div>
     <p>不會游泳真的不等於不能學衝浪，但值得信任的教練跟合適的海況，才是能不能安心下水的關鍵。出發前加 LINE 好友、打浪點名稱查一次即時浪況，比憑印象猜安不安全準確。</p>'''
 
 CONTENT_MAP = {
@@ -437,18 +479,29 @@ def stub_content(a):
       <li>注意事項與安全提醒</li>
     </ul>'''
 
+# 已有實拍封面圖的文章：art-hero 直接放圖，不再顯示灰底佔位
+COVER_IMAGES = {
+    "beginner-spots": "../images/新手衝浪＿封面.jpg",
+    "first-timer-safety": "../images/Noswming＿封面.png",
+}
+
 def article_detail(a):
     date = {"wushi-gang": "2026.07.15", "beginner-spots": "2026.07.24", "first-timer-safety": "2026.07.27"}.get(a["id"], "草稿・尚未發布")
     stat_line = '<span class="stat">浪高 0.8–1.6m</span><span class="stat">週期 6–9s</span><span>適合｜初學～中階</span>' if a["id"]=="wushi-gang" else ('<span class="stat">衝浪知識</span>' if not a["stub"] else '<span class="stat">示範資料</span>')
     body_content = CONTENT_MAP.get(a["id"]) or stub_content(a)
     ph_label = "封面照片預留位置（之後換成烏石港實拍照）" if a["id"] == "wushi-gang" else "封面照片預留位置（之後可換成實拍照）"
 
+    cover_img = COVER_IMAGES.get(a["id"])
+    if cover_img:
+        hero_inner = f'<img src="{cover_img}" alt="{a["title"]}" style="width:100%; height:100%; object-fit:cover;">'
+    else:
+        hero_inner = f'<div class="ph"></div>\n    <span class="ph-label">{ph_label}</span>'
+
     art_body = f'''{nav("../", "articles")}
 <div class="article-divider" style="margin-top:1.5rem;"><span>{a["tag"]}</span><div class="line"></div></div>
 <article class="article">
   <div class="art-hero">
-    <div class="ph"></div>
-    <span class="ph-label">{ph_label}</span>
+    {hero_inner}
   </div>
   <div class="art-wrap">
     <span class="eyebrow">{a["tag"]}・{a["region"]}</span>

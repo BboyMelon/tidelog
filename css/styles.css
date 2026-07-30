@@ -187,6 +187,9 @@
   border-radius: 4px;   /* 加一點微圓角看起來更精緻 */
   display: block;
 }
+  /* 單張圖片全寬放大版（inline-figs solo）：只有一張圖時用這個，比預設雙欄版大很多 */
+  .inline-figs.solo{ grid-template-columns:1fr; }
+  .inline-figs.solo img{ max-height:480px; }
   .inline-figs .ph{ aspect-ratio:1/1; border-radius:3px; position:relative; overflow:hidden; }
   .inline-figs figcaption{ font-family:var(--mono); font-size:.68rem; color:var(--page-text-soft); margin-top:.4rem; }
   .pullquote{ border-left:3px solid var(--yellow-deep); padding:.2rem 0 .2rem 1.2rem; margin:2rem 0; font-family:var(--serif); font-style:italic; font-size:1.2rem; color:var(--page-text); }
