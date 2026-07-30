@@ -16,6 +16,10 @@ def _css_version() -> str:
 
 CSS_VERSION = _css_version()
 
+CONTACT_EMAIL = "tidelog.surf@gmail.com"
+# 聯絡表單寫入機器人共用的 Supabase（surf-robot Flask 後端 /api/contact 端點）
+CONTACT_API_URL = "https://surf-robot.onrender.com/api/contact"
+
 def head(prefix, title, desc=""):
     return f'''<!DOCTYPE html>
 <html lang="zh-Hant">
@@ -475,11 +479,11 @@ contact_body = f'''{nav("./", "contact")}
   <p class="lead">浪點資訊有誤、想投稿文章，或單純想聊衝浪，都歡迎寫信給我們。</p>
 
   <div class="contact-info">
-    <span>📧 hello@tidelog.example</span>
+    <span>📧 {CONTACT_EMAIL}</span>
     <span>📍 台灣</span>
   </div>
 
-  <form class="contact-form" action="mailto:hello@tidelog.example" method="post" enctype="text/plain">
+  <form class="contact-form" id="contact-form">
     <div class="form-field">
       <label for="c-name">姓名</label>
       <input id="c-name" name="姓名" type="text" required>
@@ -493,11 +497,39 @@ contact_body = f'''{nav("./", "contact")}
       <textarea id="c-msg" name="訊息" required></textarea>
     </div>
     <button class="btn primary form-submit" type="submit">送出</button>
+    <p class="form-note" id="contact-status" hidden></p>
   </form>
 
-  <p class="form-note">目前用的是最簡單的 mailto 表單（點送出會開啟你自己的信箱軟體寄信，不是即時送到後台），
-  之後想要「填完直接送到資料庫/信箱」的正式表單，可以接 Formspree、Google 表單，或串一個小後端，我可以幫你接。</p>
+  <p class="form-note">填寫後會直接寫進後台資料庫，我們看到會盡快回覆；若表單暫時無法送出，也歡迎直接寫信到 {CONTACT_EMAIL}。</p>
 </div>
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', function (e) {{
+  e.preventDefault();
+  var form = e.target;
+  var status = document.getElementById('contact-status');
+  var payload = {{
+    name: document.getElementById('c-name').value,
+    email: document.getElementById('c-email').value,
+    message: document.getElementById('c-msg').value,
+  }};
+  fetch({json.dumps(CONTACT_API_URL)}, {{
+    method: 'POST',
+    headers: {{ 'Content-Type': 'application/json' }},
+    body: JSON.stringify(payload),
+  }})
+    .then(function (r) {{ return r.json(); }})
+    .then(function (data) {{
+      status.hidden = false;
+      status.textContent = data.ok ? '✅ ' + data.message : '❌ ' + data.message;
+      if (data.ok) form.reset();
+    }})
+    .catch(function () {{
+      status.hidden = false;
+      status.textContent = '送出失敗，請直接寫信到 {CONTACT_EMAIL}';
+    }});
+}});
+</script>
 
 {footer("./")}'''
 
