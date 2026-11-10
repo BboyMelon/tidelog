@@ -29,6 +29,8 @@ SITE_URL = "https://bboymelon.github.io/tidelog/"
 DEFAULT_OG_IMAGE = "images/wushi_surfbackground.png"
 # 每產生一頁就記錄它的網址路徑，最後用這份清單寫出 sitemap.xml
 SITEMAP_PATHS = []
+# Google Search Console 擁有權驗證碼（HTML 標記驗證法，驗證後也要保留，刪掉會失去驗證）
+GOOGLE_SITE_VERIFICATION = "6vG_OHcmsSXcH-K6nGXlRyyU4G3LKuzPMdqcRQjmzo8"
 
 def abs_url(path):
     """把站內相對路徑（例如 'articles/a.html'、'./images/封面.jpg'）轉成完整網址。
@@ -50,6 +52,7 @@ def head(prefix, title, desc="", path="", image=None, og_type="website"):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{full_title}</title>
 <meta name="description" content="{desc}">
+<meta name="google-site-verification" content="{GOOGLE_SITE_VERIFICATION}">
 <link rel="canonical" href="{url}">
 <meta property="og:site_name" content="浪誌 TIDELOG">
 <meta property="og:type" content="{og_type}">
