@@ -2,6 +2,7 @@
 import os
 import json
 import hashlib
+from urllib.parse import quote
 
 # ROOT 自動抓「這個腳本所在資料夾的上一層」= tidelog-site/ 專案根目錄
 # 所以不管在誰的電腦上，只要資料夾結構不變，這個腳本都能正常執行
@@ -20,14 +21,44 @@ CONTACT_EMAIL = "tidelog.surf@gmail.com"
 # 聯絡表單寫入機器人共用的 Supabase（surf-robot Flask 後端 /api/contact 端點）
 CONTACT_API_URL = "https://surf-robot.onrender.com/api/contact"
 
-def head(prefix, title, desc=""):
+# ── SEO 設定 ──
+# 網站正式網址（結尾要有 /）。之後如果換成自己的網域，只要改這一行，
+# canonical / og:url / sitemap.xml / robots.txt 全部會跟著變
+SITE_URL = "https://bboymelon.github.io/tidelog/"
+# 分享到 LINE / FB 時預設的預覽圖（文章頁會改用自己的封面圖）
+DEFAULT_OG_IMAGE = "images/wushi_surfbackground.png"
+# 每產生一頁就記錄它的網址路徑，最後用這份清單寫出 sitemap.xml
+SITEMAP_PATHS = []
+
+def abs_url(path):
+    """把站內相對路徑（例如 'articles/a.html'、'./images/封面.jpg'）轉成完整網址。
+    中文/全形檔名要做 URL 編碼，不然 Google 和 LINE 預覽會抓不到圖。"""
+    if path.startswith("./"):
+        path = path[2:]
+    return SITE_URL + quote(path)
+
+def head(prefix, title, desc="", path="", image=None, og_type="website"):
+    # path：這一頁相對於網站根目錄的路徑（首頁是 ""），用來產生 canonical 與 sitemap
+    SITEMAP_PATHS.append(path)
+    url = abs_url(path)
+    img = abs_url(image or DEFAULT_OG_IMAGE)
+    full_title = f"{title}｜浪誌 TIDELOG"
     return f'''<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{title}｜浪誌 TIDELOG</title>
+<title>{full_title}</title>
 <meta name="description" content="{desc}">
+<link rel="canonical" href="{url}">
+<meta property="og:site_name" content="浪誌 TIDELOG">
+<meta property="og:type" content="{og_type}">
+<meta property="og:title" content="{full_title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:url" content="{url}">
+<meta property="og:image" content="{img}">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="{prefix}css/styles.css?v={CSS_VERSION}">
 </head>
 <body>
@@ -387,7 +418,7 @@ index_body = f'''{nav("./", "home")}
 {footer("./")}'''
 
 with open(f"{ROOT}/index.html", "w") as f:
-    f.write(head("./", "首頁", "台灣衝浪浪點與知識筆記") + index_body + FOOT)
+    f.write(head("./", "首頁", "浪誌 TIDELOG：台灣衝浪浪點地圖、即時浪況與新手衝浪知識筆記，北中南浪點介紹一次看。", path="") + index_body + FOOT)
 
 print("index.html written")
 
@@ -496,7 +527,7 @@ articles_body = f'''{nav("./", "articles")}
 {pagination_js}'''
 
 with open(f"{ROOT}/articles.html", "w") as f:
-    f.write(head("./", "衝浪文章", "所有浪點介紹、衝浪知識與裝備筆記文章列表") + articles_body + FOOT)
+    f.write(head("./", "衝浪文章", "所有浪點介紹、衝浪知識與裝備筆記文章列表", path="articles.html") + articles_body + FOOT)
 
 print("articles.html written")
 
@@ -669,7 +700,7 @@ def article_detail(a):
 </article>
 
 {footer("../")}'''
-    return head("../", a["title"], a["desc"]) + art_body + FOOT
+    return head("../", a["title"], a["desc"], path=f"articles/{a['id']}.html", image=a["img"], og_type="article") + art_body + FOOT
 
 for a in articles:
     with open(f"{ROOT}/articles/{a['id']}.html", "w") as f:
@@ -739,7 +770,7 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
 {footer("./")}'''
 
 with open(f"{ROOT}/contact.html", "w") as f:
-    f.write(head("./", "聯絡我們", "聯絡浪誌 TIDELOG") + contact_body + FOOT)
+    f.write(head("./", "聯絡我們", "聯絡浪誌 TIDELOG", path="contact.html") + contact_body + FOOT)
 
 # ─────────────────────────────────────────────────────────
 # subscribe.html
@@ -778,7 +809,24 @@ subscribe_body = f'''{nav("./", "subscribe")}
 {footer("./")}'''
 
 with open(f"{ROOT}/subscribe.html", "w") as f:
-    f.write(head("./", "WaveForecast浪況機器人", "訂閱浪誌 TIDELOG 最新浪況與文章通知") + subscribe_body + FOOT)
+    f.write(head("./", "WaveForecast浪況機器人", "訂閱浪誌 TIDELOG 最新浪況與文章通知", path="subscribe.html") + subscribe_body + FOOT)
 
 print("contact.html + subscribe.html written")
 
+# ─────────────────────────────────────────────────────────
+# SEO：sitemap.xml（告訴 Google 網站有哪些頁面，到 Search Console 提交這個網址）
+# 註：不產生 robots.txt——GitHub Pages 專案站在 /tidelog/ 子路徑，robots.txt 只有放在網域根目錄才有效
+# 上面每個 head() 都會把頁面路徑記進 SITEMAP_PATHS，這裡統一寫出，新增文章不用另外改
+from datetime import date
+today = date.today().isoformat()
+urls = "\n".join(
+    f"  <url><loc>{abs_url(p)}</loc><lastmod>{today}</lastmod></url>"
+    for p in SITEMAP_PATHS
+)
+with open(f"{ROOT}/sitemap.xml", "w") as f:
+    f.write(f'''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{urls}
+</urlset>
+''')
+print(f"sitemap.xml ({len(SITEMAP_PATHS)} urls) written")
