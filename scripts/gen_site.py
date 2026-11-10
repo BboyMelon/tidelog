@@ -144,6 +144,9 @@ articles = [
     dict(id="first-timer-safety", tag="衝浪知識", region="新手起步", title="不會游泳可以衝浪嗎？第一次下水前該知道的 3 件事",
          desc="不會游泳不是問題，問題是海況複雜、離岸流，還有沒學會讀浪跟划水——這篇整理下水前的checklist。",
          img="./images/Noswming＿封面.png", wave_cls="waves-c", read="6 分", stub=False),
+    dict(id="beginner-board", tag="裝備筆記", region="新手起步", title="新手衝浪板怎麼選？軟板、長板、短板一次搞懂",
+         desc="第一塊板子別看帥不帥，看浮力夠不夠——長度、容積、材質三個重點，加上租板還是買板的判斷方式。",
+         img="./images/衝浪新手選板.jpg", wave_cls="waves-a", read="6 分", stub=False),
 ]
 
 # ─────────────────────────────────────────────────────────
@@ -649,10 +652,63 @@ first_timer_safety_content = '''    <p>常有人問：不會游泳可以學衝�
 </div>
     <p>不會游泳真的不等於不能學衝浪，但值得信任的教練跟合適的海況，才是能不能安心下水的關鍵。出發前加 LINE 好友、打浪點名稱查一次即時浪況，比憑印象猜安不安全準確。</p>'''
 
+beginner_board_content = '''    <p>新手挑第一塊板子，最常犯的錯是照著衝浪影片裡的帥氣短板去選。但對剛開始學的人來說，該問的不是「哪塊板子比較帥」，而是「哪塊板子最容易讓我站起來」——答案幾乎都一樣：<strong>夠長、夠厚、夠浮</strong>。</p>
+
+    <h2>先搞懂三種板型</h2>
+    <p>衝浪板大致可以分成三類，差別主要在長度跟浮力：</p>
+    <ul>
+      <li><strong>軟板（Soft-top）</strong>：表面是軟泡棉，撞到人或撞到自己都比較不痛，7～9 呎最常見。幾乎所有衝浪教室的體驗課都用這種</li>
+      <li><strong>長板（Longboard）</strong>：9 呎以上，浮力大、划水快、小浪也追得到，適合台灣夏天常見的小浪，玩法偏優雅的走板</li>
+      <li><strong>短板（Shortboard）</strong>：大約 5 呎半到 6 呎半，轉向靈活，但浮力小、划水慢，沒有一定基礎很難追到浪</li>
+    </ul>
+    <p>中間還有一種叫「快樂板（Funboard）」或「Mini Mal」，大約 7～8 呎，算是長板跟短板之間的過渡款，很多人第一塊自己買的板子就是它。</p>
+
+    <p class="pullquote">「小藍」是我的第一塊板——一張 7 呎的藍色 Funboard，陪我衝了兩年才換成短板。但中間的撞牆期長達一年，春夏秋幾乎天天下水，才真正跟它磨合起來。</p>
+
+    <h2>新手選板，先看長度跟寬度</h2>
+    <p>挑板子的時候，最直接要看的就是<strong>板長</strong>跟<strong>板寬</strong>。板子越長、越寬，浮力就越大，帶來兩個新手最需要的好處：</p>
+    <ul>
+      <li><strong>站上去比較穩</strong>：板面寬、浮力夠，起乘站立的瞬間板子不容易左右翻</li>
+      <li><strong>趴著划水不會晃</strong>：趴在板子上比較平穩，力氣可以集中在划水追浪，不用一直分心找平衡</li>
+    </ul>
+    <p>反過來說，板子太短太窄，趴上去板子就往下沉、左右晃，划水划得很累卻一直追不到浪，站起來的瞬間又晃得厲害——很多人以為是自己運動神經不好，其實是板子挑錯了。</p>
+    <p>有些板子底部或板尾會標「容積（Volume）」，單位是公升（L），也是在看浮力大小，可以當作輔助參考；但新手剛開始挑，先抓「夠長、夠寬」這兩個原則就很夠用了。</p>
+
+    <h2>租板還是買板？</h2>
+    <p>前幾次下水，<strong>建議先用租的</strong>。原因很簡單：你現在還不知道自己會不會繼續玩、習慣去哪個浪點、喜歡長板還是短板。可以考慮自己買板的時機大概是：</p>
+    <ul>
+      <li>已經可以自己划出去、穩定站起來，不用教練推</li>
+      <li>一個月會下水好幾次，租板費開始累積成一筆不小的開銷</li>
+      <li>租過幾種不同尺寸，知道自己適合的長度和容積落在哪</li>
+    </ul>
+    <p>第一塊板子很推薦買二手，新手難免會撞到、刮到，二手板摔起來比較不心疼。買之前請店家或有經驗的浪友幫忙看一下板身有沒有裂縫、進水。</p>
+    <p>尺寸的部分，我自己是從 7 呎的 Funboard 起步，但回頭看，<strong>新手還是建議先從 8～9 呎以上的長板開始</strong>——浮力更大、更好站，撞牆期也能縮短不少。等站穩了、知道自己想走優雅的長板路線還是轉向靈活的短板路線，再依照自己的衝浪風格和目標，挑下一塊板子。</p>
+
+<div class="inline-figs">
+  <figure>
+    <img src="../images/衝浪新手選板.jpg" alt="7 呎藍色 Funboard「小藍」" loading="lazy">
+    <figcaption>第一塊板「小藍」：7 呎 Funboard</figcaption>
+  </figure>
+  <figure>
+    <img src="../images/衝浪新手選板2.jpg" alt="兩年後換的短板" loading="lazy">
+    <figcaption>兩年後，換成自己想要的短板</figcaption>
+  </figure>
+</div>
+
+    <h2>新手選板 checklist</h2>
+    <ul>
+      <li>第一塊板選軟板或 8 呎以上的長板，先別碰短板</li>
+      <li>挑夠長、夠寬的板子，寧可太浮也不要太沉</li>
+      <li>前幾次先租板，試過不同尺寸再決定要不要買</li>
+      <li>腳繩長度大約跟板子一樣長，下水前確認有綁好</li>
+    </ul>
+    <p>板子選對了，學衝浪會順很多，但再好的板子也救不了不適合的海況。出發前加 LINE 好友、打浪點名稱查一次即時浪況，看看今天的浪適不適合新手，再決定要不要出門打浪。</p>'''
+
 CONTENT_MAP = {
     "wushi-gang": wushi_content,
     "beginner-spots": beginner_content,
     "first-timer-safety": first_timer_safety_content,
+    "beginner-board": beginner_board_content,
 }
 
 def stub_content(a):
@@ -670,10 +726,11 @@ def stub_content(a):
 COVER_IMAGES = {
     "beginner-spots": "../images/新手衝浪＿封面.jpg",
     "first-timer-safety": "../images/Noswming＿封面.png",
+    "beginner-board": "../images/衝浪新手選板.jpg",
 }
 
 def article_detail(a):
-    date = {"wushi-gang": "2026.07.15", "beginner-spots": "2026.07.24", "first-timer-safety": "2026.07.27"}.get(a["id"], "草稿・尚未發布")
+    date = {"wushi-gang": "2026.07.15", "beginner-spots": "2026.07.24", "first-timer-safety": "2026.07.27", "beginner-board": "2026.11.10"}.get(a["id"], "草稿・尚未發布")
     stat_line = '<span class="stat">浪高 0.8–1.6m</span><span class="stat">週期 6–9s</span><span>適合｜初學～中階</span>' if a["id"]=="wushi-gang" else ('<span class="stat">衝浪知識</span>' if not a["stub"] else '<span class="stat">示範資料</span>')
     body_content = CONTENT_MAP.get(a["id"]) or stub_content(a)
     ph_label = "封面照片預留位置（之後換成烏石港實拍照）" if a["id"] == "wushi-gang" else "封面照片預留位置（之後可換成實拍照）"
